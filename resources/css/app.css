@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html {
+    scroll-behavior: smooth;
+}
+body {
+    @apply font-sans;
+}
+
+h1,
+h2,
+h3 {
+    @apply font-display;
+}
+@keyframes trackingFloat {
+    0%,
+    100% {
+        letter-spacing: 0.06em;
+    }
+    50% {
+        letter-spacing: 0.12em;
+    }
+}
+
+.heading-tracking {
+    letter-spacing: 0.06em;
+}
+
+.heading-tracking:hover {
+    animation: trackingFloat 700ms ease-in-out;
+}
+/* Neon-ish glow for the logo */
+.logo-glow {
+    filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3))
+        drop-shadow(0 0 18px rgba(236, 72, 153, 0.18))
+        drop-shadow(0 0 22px rgba(34, 211, 238, 0.16));
+}
+
+/* Stronger glow in dark mode */
+.dark .logo-glow {
+    filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.45))
+        drop-shadow(0 0 22px rgba(236, 72, 153, 0.28))
+        drop-shadow(0 0 28px rgba(34, 211, 238, 0.22));
+}
+.logo-glow:hover {
+    transform: translateY(-1px);
+    transition: transform 200ms ease;
+}
+.dark .logo-glow:hover {
+    filter: drop-shadow(0 0 14px rgba(99, 102, 241, 0.55))
+        drop-shadow(0 0 26px rgba(236, 72, 153, 0.34))
+        drop-shadow(0 0 34px rgba(34, 211, 238, 0.26));
+}
+footer .logo-glow {
+    filter: drop-shadow(0 0 16px rgba(99, 102, 241, 0.45))
+        drop-shadow(0 0 28px rgba(236, 72, 153, 0.25))
+        drop-shadow(0 0 34px rgba(34, 211, 238, 0.22));
+}

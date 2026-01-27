@@ -1,0 +1,32 @@
+@if(session('success'))
+    <div class="p-3 mb-4 rounded border bg-green-50 text-green-800">{{ session('success') }}</div>
+@endif
+
+<form method="POST" action="{{ route('contact.submit') }}" class="space-y-4">
+    @csrf
+
+    <div class="grid sm:grid-cols-2 gap-4">
+        <div>
+            <label class="text-sm">Name</label>
+            <input name="name" value="{{ old('name') }}" class="w-full rounded border p-2 bg-white/80 dark:bg-black/20" required>
+            @error('name') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+        </div>
+
+        <div>
+            <label class="text-sm">Email</label>
+            <input name="email" type="email" value="{{ old('email') }}" class="w-full rounded border p-2 bg-white/80 dark:bg-black/20" required>
+            @error('email') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+        </div>
+    </div>
+
+    {{-- honeypot --}}
+    <input name="company" class="hidden" tabindex="-1" autocomplete="off">
+
+    <div>
+        <label class="text-sm">Message</label>
+        <textarea name="message" rows="6" class="w-full rounded border p-2 bg-white/80 dark:bg-black/20" required>{{ old('message') }}</textarea>
+        @error('message') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+    </div>
+
+    <button class="px-4 py-2 rounded bg-black text-white dark:bg-white dark:text-black">Send</button>
+</form>
