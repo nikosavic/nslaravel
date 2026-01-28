@@ -162,7 +162,7 @@
                         </div>
                     @else
                         <div x-reveal class="transition-all duration-700 ease-out grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            @foreach($featured as $p)
+                        @foreach(($featured->isEmpty() && $heroProject) ? collect([$heroProject]) : $featured as $p)
                                 <a href="{{ route('projects.show', $p->slug) }}"
                                    class="group rounded-2xl border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/5 backdrop-blur p-5 hover:shadow transition">
                                     <div class="flex items-center justify-between gap-3">
