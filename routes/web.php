@@ -32,6 +32,7 @@ Route::get('/', function () {
 Route::prefix('{locale}')
     ->where(['locale' => 'en|tr'])
     ->middleware(['web'])
+    ->name('public.')
     ->group(function () {
 
         Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -51,32 +52,6 @@ Route::prefix('{locale}')
 Route::get('/lang/{locale}', [LocaleController::class, 'switch'])
     ->whereIn('locale', ['en', 'tr'])
     ->name('lang.switch');
-
-/*
-|--------------------------------------------------------------------------
-| Compatibility route names (temporary)
-|--------------------------------------------------------------------------
-|
-| Keeps existing route('home') / route('projects.index') calls working
-| by redirecting to /{session-locale}/...
-|
-*/
-Route::middleware(['web'])->group(function () {
-    Route::get('/projects', fn () => redirect()->to('/' . session('locale', 'en') . '/projects'))
-        ->name('projects.index');
-
-    Route::get('/projects/{project:slug}', fn ($slug) => redirect()->to('/' . session('locale', 'en') . '/projects/' . $slug))
-        ->name('projects.show');
-
-    Route::get('/contact', fn () => redirect()->to('/' . session('locale', 'en') . '/contact'))
-        ->name('contact.show');
-
-    Route::post('/contact', fn () => redirect()->to('/' . session('locale', 'en') . '/contact'))
-        ->name('contact.submit');
-
-    Route::get('/home', fn () => redirect()->to('/' . session('locale', 'en')))
-        ->name('home');
-});
 
 /*
 |--------------------------------------------------------------------------
