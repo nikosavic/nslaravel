@@ -60,14 +60,31 @@
             <!-- Right side (Desktop) -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
 
-                {{-- Language toggle --}}
-                @php($loc = app()->getLocale())
-                <a href="{{ route('lang.switch', ['locale' => $loc === 'tr' ? 'en' : 'tr']) }}"
-                   class="me-3 inline-flex items-center justify-center rounded-lg border border-black/10 dark:border-white/10
-                          bg-white/60 dark:bg-white/5 backdrop-blur px-3 py-2 text-sm
-                          text-gray-700 dark:text-white/70 hover:bg-white/80 dark:hover:bg-white/10">
-                    {{ strtoupper($loc) }}
-                </a>
+            {{-- Language toggle (URL-based: /en, /tr) --}}
+@php
+    $current = request()->route('locale') ?? app()->getLocale();
+    $current = in_array($current, ['en','tr']) ? $current : 'en';
+
+    $target = $current === 'tr' ? 'en' : 'tr';
+
+    // Build "same page, other locale"
+    $path = request()->path();          // e.g. "en/projects/foo"
+    $parts = explode('/', $path);
+
+    if (in_array($parts[0] ?? '', ['en','tr'])) {
+        array_shift($parts);            // remove current locale
+    }
+
+    $newPath = $target . (count($parts) ? '/' . implode('/', $parts) : '');
+    $newUrl  = url($newPath);
+@endphp
+
+<a href="{{ $newUrl }}"
+   class="me-3 inline-flex items-center justify-center rounded-lg border border-black/10 dark:border-white/10
+          bg-white/60 dark:bg-white/5 backdrop-blur px-3 py-2 text-sm
+          text-gray-700 dark:text-white/70 hover:bg-white/80 dark:hover:bg-white/10">
+    {{ strtoupper($target) }}
+</a>
 
                 <!-- Dark mode toggle -->
                 <button type="button"
