@@ -5,16 +5,28 @@
         @if($projects->count() === 0)
             <p class="text-gray-600">No published projects yet.</p>
         @else
-            <div class="grid sm:grid-cols-2 gap-4">
-                @foreach($projects as $p)
-                    <a href="{{ route('projects.show', $p->slug) }}" class="block p-5 rounded-xl border hover:shadow">
-                        <div class="font-semibold">{{ $p->title }}</div>
-                        @if($p->summary)
-                            <div class="text-gray-600 mt-1">{{ $p->summary }}</div>
-                        @endif
-                    </a>
-                @endforeach
-            </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+    @foreach($projects as $p)
+        <a href="{{ route('projects.show', $p->slug) }}" class="block p-5 rounded-xl border hover:shadow">
+
+            @if($p->image_path)
+                <img
+                    src="{{ asset('storage/' . $p->image_path) }}"
+                    alt="{{ $p->title }}"
+                    class="mb-4 h-44 w-full rounded-xl border border-black/10 dark:border-white/10 object-cover"
+                    loading="lazy"
+                >
+            @endif
+
+            <div class="font-semibold">{{ $p->title }}</div>
+
+            @if($p->summary)
+                <div class="text-gray-600 mt-1">{{ $p->summary }}</div>
+            @endif
+
+        </a>
+    @endforeach
+</div>
 
             <div>{{ $projects->links() }}</div>
         @endif
