@@ -22,6 +22,7 @@ class Project extends Model
     
         'repo_url',
         'live_url',
+        'image_path',
     
         'featured',
         'sort_order',
