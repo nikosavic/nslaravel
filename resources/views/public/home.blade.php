@@ -156,7 +156,7 @@
                         </p>
                     </div>
 
-                    @if($featured->isEmpty())
+                    @if($featured->isEmpty() && !$heroProject)
                         <div class="rounded-xl border border-black/10 dark:border-white/10 p-6 text-gray-600 dark:text-white/60">
                             {!! __('ui.sections.projects.empty') !!}
                         </div>
