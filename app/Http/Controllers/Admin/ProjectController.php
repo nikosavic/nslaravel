@@ -37,7 +37,7 @@ class ProjectController extends Controller
         $data = $this->validateProject($request);
 
         if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title']);
+            $data['slug'] = Str::slug($data['title_en'] ?? '');
         }
 
         $data['featured'] = (bool) ($data['featured'] ?? false);
@@ -78,7 +78,7 @@ class ProjectController extends Controller
         $data = $this->validateProject($request, $project->id);
 
         if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title']);
+            $data['slug'] = Str::slug($data['title_en'] ?? '');
         }
 
         $data['featured'] = (bool) ($data['featured'] ?? false);
