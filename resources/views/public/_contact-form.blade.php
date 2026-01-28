@@ -15,7 +15,7 @@
     </div>
 @endif
 
-<form method="POST" action="{{ route('contact.submit') }}" class="space-y-4">
+<form method="POST" action="{{ route('public.contact.submit', ['locale' => request()->route('locale')]) }}" class="space-y-4">
     @csrf
 
     {{-- Timing anti-bot --}}

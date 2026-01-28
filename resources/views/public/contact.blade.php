@@ -6,7 +6,7 @@
             <div class="p-3 rounded border bg-green-50 text-green-800">{{ session('success') }}</div>
         @endif
 
-        <form method="POST" action="{{ route('contact.submit') }}" class="space-y-4">
+        <form method="POST" action="{{ route('public.contact.submit', ['locale' => request()->route('locale')]) }}" class="space-y-4">
             @csrf
 
             <input type="hidden" name="ts" value="{{ time() }}">

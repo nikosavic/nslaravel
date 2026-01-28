@@ -65,7 +65,7 @@
 
                     <div class="lg:col-span-5 space-y-4">
                         @if($heroProject)
-                            <a href="{{ route('projects.show', $heroProject->slug) }}"
+                        <a href="{{ route('public.projects.show', ['locale' => request()->route('locale'), 'project' => $heroProject->slug]) }}"
                                class="block rounded-3xl border border-black/10 dark:border-white/10
                                       bg-white/70 dark:bg-white/5 backdrop-blur p-7 sm:p-8
                                       hover:shadow-lg transition">
@@ -163,7 +163,7 @@
                     @else
                         <div x-reveal class="transition-all duration-700 ease-out grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach(($featured->isEmpty() && $heroProject) ? collect([$heroProject]) : $featured as $p)
-                        <a href="{{ route('projects.show', $p->slug) }}"
+                        <a href="{{ route('public.projects.show', ['locale' => request()->route('locale'), 'project' => $p->slug]) }}"
    class="group rounded-2xl border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/5 backdrop-blur p-5 hover:shadow transition">
 
     @if($p->image_path)
@@ -199,7 +199,7 @@
                     @endif
 
                     <div>
-                        <a href="{{ route('projects.index') }}" class="underline text-sm text-gray-700 dark:text-white/70">
+                    <a href="{{ route('public.projects.index', ['locale' => request()->route('locale')]) }}" class="underline text-sm text-gray-700 dark:text-white/70">
                             {{ __('ui.sections.projects.view_all') }} →
                         </a>
                     </div>

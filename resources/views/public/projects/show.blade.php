@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="max-w-3xl mx-auto px-4 py-12 space-y-6">
-        <a href="{{ route('projects.index') }}" class="text-sm text-gray-600 hover:underline">← Back</a>
+    <a href="{{ route('public.projects.index', ['locale' => request()->route('locale')]) }}"
 
         <h1 class="text-3xl font-bold">{{ $project->title }}</h1>
 

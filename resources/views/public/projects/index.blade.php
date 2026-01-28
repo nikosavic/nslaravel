@@ -7,7 +7,7 @@
         @else
         <div class="grid sm:grid-cols-2 gap-4">
     @foreach($projects as $p)
-        <a href="{{ route('projects.show', $p->slug) }}" class="block p-5 rounded-xl border hover:shadow">
+    <a href="{{ route('public.projects.show', ['locale' => request()->route('locale'), 'project' => $p->slug]) }}"
 
             @if($p->image_path)
                 <img
