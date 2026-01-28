@@ -163,27 +163,37 @@
                     @else
                         <div x-reveal class="transition-all duration-700 ease-out grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach(($featured->isEmpty() && $heroProject) ? collect([$heroProject]) : $featured as $p)
-                                <a href="{{ route('projects.show', $p->slug) }}"
-                                   class="group rounded-2xl border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/5 backdrop-blur p-5 hover:shadow transition">
-                                    <div class="flex items-center justify-between gap-3">
-                                        <div class="font-semibold group-hover:underline">{{ $p->title }}</div>
-                                        @if($p->featured)
-                                            <span class="text-[11px] rounded-full px-2 py-1 border border-black/10 dark:border-white/10">
-                                                {{ __('ui.projects.badge_featured') }}
-                                            </span>
-                                        @endif
-                                    </div>
+                        <a href="{{ route('projects.show', $p->slug) }}"
+   class="group rounded-2xl border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/5 backdrop-blur p-5 hover:shadow transition">
 
-                                    @if($p->summary)
-                                        <div class="mt-2 text-sm text-gray-600 dark:text-white/60 line-clamp-3">
-                                            {{ $p->summary }}
-                                        </div>
-                                    @endif
+    @if($p->image_path)
+        <img
+            src="{{ asset('storage/' . $p->image_path) }}"
+            alt="{{ $p->title }}"
+            class="mb-4 h-40 w-full rounded-xl border border-black/10 dark:border-white/10 object-cover"
+            loading="lazy"
+        >
+    @endif
 
-                                    <div class="mt-4 text-xs text-gray-500 dark:text-white/40">
-                                        {{ strtoupper($p->status) }}
-                                    </div>
-                                </a>
+    <div class="flex items-center justify-between gap-3">
+        <div class="font-semibold group-hover:underline">{{ $p->title }}</div>
+        @if($p->featured)
+            <span class="text-[11px] rounded-full px-2 py-1 border border-black/10 dark:border-white/10">
+                {{ __('ui.projects.badge_featured') }}
+            </span>
+        @endif
+    </div>
+
+    @if($p->summary)
+        <div class="mt-2 text-sm text-gray-600 dark:text-white/60 line-clamp-3">
+            {{ $p->summary }}
+        </div>
+    @endif
+
+    <div class="mt-4 text-xs text-gray-500 dark:text-white/40">
+        {{ strtoupper($p->status) }}
+    </div>
+</a>
                             @endforeach
                         </div>
                     @endif
