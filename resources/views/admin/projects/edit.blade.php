@@ -6,10 +6,19 @@
             @csrf
             @method('PUT')
 
-            <div>
-                <label class="text-sm">Title</label>
-                <input name="title" class="w-full rounded border p-2" value="{{ old('title', $project->title) }}" required>
-                @error('title') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+            {{-- Title (EN/TR) --}}
+            <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="text-sm">Title (EN)</label>
+                    <input name="title_en" class="w-full rounded border p-2" value="{{ old('title_en', $project->title_en) }}" required>
+                    @error('title_en') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+                </div>
+
+                <div>
+                    <label class="text-sm">Title (TR)</label>
+                    <input name="title_tr" class="w-full rounded border p-2" value="{{ old('title_tr', $project->title_tr) }}" required>
+                    @error('title_tr') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+                </div>
             </div>
 
             <div>
@@ -18,16 +27,34 @@
                 @error('slug') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
             </div>
 
-            <div>
-                <label class="text-sm">Summary</label>
-                <input name="summary" class="w-full rounded border p-2" value="{{ old('summary', $project->summary) }}">
-                @error('summary') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+            {{-- Summary (EN/TR) --}}
+            <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="text-sm">Summary (EN)</label>
+                    <input name="summary_en" class="w-full rounded border p-2" value="{{ old('summary_en', $project->summary_en) }}">
+                    @error('summary_en') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+                </div>
+
+                <div>
+                    <label class="text-sm">Summary (TR)</label>
+                    <input name="summary_tr" class="w-full rounded border p-2" value="{{ old('summary_tr', $project->summary_tr) }}">
+                    @error('summary_tr') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+                </div>
             </div>
 
-            <div>
-                <label class="text-sm">Body</label>
-                <textarea name="body" rows="8" class="w-full rounded border p-2">{{ old('body', $project->body) }}</textarea>
-                @error('body') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+            {{-- Body (EN/TR) --}}
+            <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="text-sm">Body (EN)</label>
+                    <textarea name="body_en" rows="10" class="w-full rounded border p-2">{{ old('body_en', $project->body_en) }}</textarea>
+                    @error('body_en') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+                </div>
+
+                <div>
+                    <label class="text-sm">Body (TR)</label>
+                    <textarea name="body_tr" rows="10" class="w-full rounded border p-2">{{ old('body_tr', $project->body_tr) }}</textarea>
+                    @error('body_tr') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+                </div>
             </div>
 
             <div class="grid sm:grid-cols-2 gap-4">
@@ -44,21 +71,21 @@
             </div>
 
             <div>
-    <label class="text-sm">Project image (jpg/png/webp)</label>
+                <label class="text-sm">Project image (jpg/png/webp)</label>
 
-    @if($project->image_path)
-        <div class="mt-2">
-            <img
-                src="{{ asset('storage/' . $project->image_path) }}"
-                alt="Project image"
-                class="h-32 rounded border object-cover"
-            >
-        </div>
-    @endif
+                @if($project->image_path)
+                    <div class="mt-2">
+                        <img
+                            src="{{ asset('storage/' . $project->image_path) }}"
+                            alt="Project image"
+                            class="h-32 rounded border object-cover"
+                        >
+                    </div>
+                @endif
 
-    <input name="image" type="file" accept="image/png,image/jpeg,image/webp" class="w-full rounded border p-2 mt-2">
-    @error('image') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
-</div>
+                <input name="image" type="file" accept="image/png,image/jpeg,image/webp" class="w-full rounded border p-2 mt-2">
+                @error('image') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+            </div>
 
             <div class="grid sm:grid-cols-3 gap-4">
                 <div>
