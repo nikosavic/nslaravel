@@ -42,6 +42,10 @@ class ProjectController extends Controller
 
         $data['featured'] = (bool) ($data['featured'] ?? false);
 
+        if ($request->hasFile('image')) {
+            $data['image_path'] = $request->file('image')->store('projects', 'public');
+        }
+
         Project::create($data);
 
         return redirect()
@@ -79,6 +83,10 @@ class ProjectController extends Controller
 
         $data['featured'] = (bool) ($data['featured'] ?? false);
 
+        if ($request->hasFile('image')) {
+            $data['image_path'] = $request->file('image')->store('projects', 'public');
+        }
+
         $project->update($data);
 
         return redirect()
@@ -112,6 +120,10 @@ class ProjectController extends Controller
             'body' => ['nullable', 'string'],
             'repo_url' => ['nullable', 'url', 'max:255'],
             'live_url' => ['nullable', 'url', 'max:255'],
+
+            // NEW: image upload (optional)
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+
             'featured' => ['sometimes', 'boolean'],
             'sort_order' => ['nullable', 'integer', 'min:0', 'max:9999'],
             'status' => ['required', 'in:draft,published'],
