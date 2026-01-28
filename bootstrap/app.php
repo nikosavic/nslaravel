@@ -10,15 +10,17 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Illuminate\Foundation\Configuration\Middleware $middleware) {
+    ->withMiddleware(function (Middleware $middleware) {
+        // Route middleware aliases
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminOnly::class,
+            'setlocale' => \App\Http\Middleware\SetLocale::class,
         ]);
-    })
-    
-    ->withMiddleware(function ($middleware) {
+
+        // Add SetLocale to every web request (recommended)
         $middleware->web(\App\Http\Middleware\SetLocale::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
-    })->create();
+    })
+    ->create();
