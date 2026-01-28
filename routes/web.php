@@ -32,7 +32,7 @@ Route::get('/', function () {
 
 Route::prefix('{locale}')
     ->where(['locale' => 'en|tr'])
-    ->middleware(['web', 'setlocale'])
+    ->middleware(['web'])
     ->group(function () {
 
         Route::get('/', [HomeController::class, 'index'])->name('home');
