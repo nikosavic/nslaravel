@@ -114,16 +114,23 @@ class ProjectController extends Controller
         }
 
         return $request->validate([
-            'title' => ['required', 'string', 'max:120'],
+            'title_en' => ['required', 'string', 'max:120'],
+            'title_tr' => ['required', 'string', 'max:120'],
+        
             'slug' => ['nullable', 'string', 'max:140', $uniqueSlugRule],
-            'summary' => ['nullable', 'string', 'max:280'],
-            'body' => ['nullable', 'string'],
+        
+            'summary_en' => ['nullable', 'string', 'max:280'],
+            'summary_tr' => ['nullable', 'string', 'max:280'],
+        
+            'body_en' => ['nullable', 'string'],
+            'body_tr' => ['nullable', 'string'],
+        
             'repo_url' => ['nullable', 'url', 'max:255'],
             'live_url' => ['nullable', 'url', 'max:255'],
-
-            // NEW: image upload (optional)
+        
+            // image upload (optional)
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-
+        
             'featured' => ['sometimes', 'boolean'],
             'sort_order' => ['nullable', 'integer', 'min:0', 'max:9999'],
             'status' => ['required', 'in:draft,published'],
