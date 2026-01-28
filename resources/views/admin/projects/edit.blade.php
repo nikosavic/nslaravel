@@ -2,7 +2,7 @@
     <div class="max-w-3xl mx-auto px-4 py-12 space-y-6">
         <h1 class="text-3xl font-bold">Edit Project</h1>
 
-        <form method="POST" action="{{ route('admin.projects.update', $project) }}" class="space-y-4">
+        <form method="POST" action="{{ route('admin.projects.update', $project) }}" enctype="multipart/form-data" class="space-y-4">
             @csrf
             @method('PUT')
 
@@ -42,6 +42,23 @@
                     @error('live_url') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
                 </div>
             </div>
+
+            <div>
+    <label class="text-sm">Project image (jpg/png/webp)</label>
+
+    @if($project->image_path)
+        <div class="mt-2">
+            <img
+                src="{{ asset('storage/' . $project->image_path) }}"
+                alt="Project image"
+                class="h-32 rounded border object-cover"
+            >
+        </div>
+    @endif
+
+    <input name="image" type="file" accept="image/png,image/jpeg,image/webp" class="w-full rounded border p-2 mt-2">
+    @error('image') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+</div>
 
             <div class="grid sm:grid-cols-3 gap-4">
                 <div>
