@@ -1,14 +1,23 @@
 <x-app-layout>
     <div class="max-w-3xl mx-auto px-4 py-12 space-y-6">
-        <h1 class="text-3xl font-bold">New Project</h1>
+        <h1 class="text-3xl font-bold">Create Project</h1>
 
-        <form method="POST" action="{{ route('admin.projects.store') }}" class="space-y-4">
+        <form method="POST" action="{{ route('admin.projects.store') }}" enctype="multipart/form-data" class="space-y-4">
             @csrf
 
-            <div>
-                <label class="text-sm">Title</label>
-                <input name="title" class="w-full rounded border p-2" value="{{ old('title') }}" required>
-                @error('title') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+            {{-- Title (EN/TR) --}}
+            <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="text-sm">Title (EN)</label>
+                    <input name="title_en" class="w-full rounded border p-2" value="{{ old('title_en') }}" required>
+                    @error('title_en') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+                </div>
+
+                <div>
+                    <label class="text-sm">Title (TR)</label>
+                    <input name="title_tr" class="w-full rounded border p-2" value="{{ old('title_tr') }}" required>
+                    @error('title_tr') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+                </div>
             </div>
 
             <div>
@@ -17,16 +26,34 @@
                 @error('slug') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
             </div>
 
-            <div>
-                <label class="text-sm">Summary</label>
-                <input name="summary" class="w-full rounded border p-2" value="{{ old('summary') }}">
-                @error('summary') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+            {{-- Summary (EN/TR) --}}
+            <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="text-sm">Summary (EN)</label>
+                    <input name="summary_en" class="w-full rounded border p-2" value="{{ old('summary_en') }}">
+                    @error('summary_en') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+                </div>
+
+                <div>
+                    <label class="text-sm">Summary (TR)</label>
+                    <input name="summary_tr" class="w-full rounded border p-2" value="{{ old('summary_tr') }}">
+                    @error('summary_tr') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+                </div>
             </div>
 
-            <div>
-                <label class="text-sm">Body</label>
-                <textarea name="body" rows="8" class="w-full rounded border p-2">{{ old('body') }}</textarea>
-                @error('body') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+            {{-- Body (EN/TR) --}}
+            <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="text-sm">Body (EN)</label>
+                    <textarea name="body_en" rows="10" class="w-full rounded border p-2">{{ old('body_en') }}</textarea>
+                    @error('body_en') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+                </div>
+
+                <div>
+                    <label class="text-sm">Body (TR)</label>
+                    <textarea name="body_tr" rows="10" class="w-full rounded border p-2">{{ old('body_tr') }}</textarea>
+                    @error('body_tr') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+                </div>
             </div>
 
             <div class="grid sm:grid-cols-2 gap-4">
@@ -42,18 +69,27 @@
                 </div>
             </div>
 
+            <div>
+                <label class="text-sm">Project image (jpg/png/webp)</label>
+                <input name="image" type="file" accept="image/png,image/jpeg,image/webp" class="w-full rounded border p-2 mt-2">
+                @error('image') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+            </div>
+
             <div class="grid sm:grid-cols-3 gap-4">
                 <div>
                     <label class="text-sm">Status</label>
                     <select name="status" class="w-full rounded border p-2">
-                        <option value="draft" @selected(old('status')==='draft')>draft</option>
-                        <option value="published" @selected(old('status')==='published')>published</option>
+                        @php($status = old('status', 'draft'))
+                        <option value="draft" @selected($status==='draft')>draft</option>
+                        <option value="published" @selected($status==='published')>published</option>
                     </select>
+                    @error('status') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
                 </div>
 
                 <div>
                     <label class="text-sm">Sort order</label>
                     <input name="sort_order" type="number" class="w-full rounded border p-2" value="{{ old('sort_order', 0) }}">
+                    @error('sort_order') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="flex items-center gap-2 pt-6">
@@ -62,7 +98,7 @@
                 </div>
             </div>
 
-            <button class="px-4 py-2 rounded bg-black text-white">Save</button>
+            <button class="px-4 py-2 rounded bg-black text-white">Create project</button>
         </form>
     </div>
 </x-app-layout>
