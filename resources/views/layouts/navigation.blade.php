@@ -14,36 +14,58 @@
     x-init="applyTheme()"
     class="sticky top-0 z-50 py-1 border-b border-black/10 dark:border-white/10 bg-slate-200/70 dark:bg-neutral-950/60 backdrop-blur-xl"
 >
+    @php
+        // Current locale from route param (preferred) with fallback
+        $loc = request()->route('locale') ?? app()->getLocale();
+        $loc = in_array($loc, ['en','tr']) ? $loc : 'en';
+
+        // Home URL for current locale
+        $homeUrl = route('public.home', ['locale' => $loc]);
+
+        // Build "same path, other locale" URL
+        $target = $loc === 'tr' ? 'en' : 'tr';
+
+        $path = request()->path(); // e.g. "en/projects/foo" or "tr"
+        $parts = explode('/', $path);
+
+        if (in_array($parts[0] ?? '', ['en','tr'])) {
+            array_shift($parts);
+        }
+
+        $newPath = $target . (count($parts) ? '/' . implode('/', $parts) : '');
+        $langUrl = url($newPath);
+    @endphp
+
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20">
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('home') . '#top' }}" class="flex items-center">
+                    <a href="{{ $homeUrl . '#top' }}" class="flex items-center">
                         <x-application-logo class="block h-12 w-auto logo-glow" />
                     </a>
                 </div>
 
                 <!-- Navigation Links (Desktop) -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('home') . '#top'" :active="request()->routeIs('home')">
+                    <x-nav-link :href="$homeUrl . '#top'" :active="request()->routeIs('public.home')">
                         {{ __('ui.nav.home') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('home') . '#projects'">
+                    <x-nav-link :href="$homeUrl . '#projects'">
                         {{ __('ui.nav.projects') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('home') . '#stack'">
+                    <x-nav-link :href="$homeUrl . '#stack'">
                         {{ __('ui.nav.stack') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('home') . '#about'">
+                    <x-nav-link :href="$homeUrl . '#about'">
                         {{ __('ui.nav.about') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('home') . '#contact'">
+                    <x-nav-link :href="$homeUrl . '#contact'">
                         {{ __('ui.nav.contact') }}
                     </x-nav-link>
 
@@ -59,32 +81,13 @@
 
             <!-- Right side (Desktop) -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-
-            {{-- Language toggle (URL-based: /en, /tr) --}}
-@php
-    $current = request()->route('locale') ?? app()->getLocale();
-    $current = in_array($current, ['en','tr']) ? $current : 'en';
-
-    $target = $current === 'tr' ? 'en' : 'tr';
-
-    // Build "same page, other locale"
-    $path = request()->path();          // e.g. "en/projects/foo"
-    $parts = explode('/', $path);
-
-    if (in_array($parts[0] ?? '', ['en','tr'])) {
-        array_shift($parts);            // remove current locale
-    }
-
-    $newPath = $target . (count($parts) ? '/' . implode('/', $parts) : '');
-    $newUrl  = url($newPath);
-@endphp
-
-<a href="{{ $newUrl }}"
-   class="me-3 inline-flex items-center justify-center rounded-lg border border-black/10 dark:border-white/10
-          bg-white/60 dark:bg-white/5 backdrop-blur px-3 py-2 text-sm
-          text-gray-700 dark:text-white/70 hover:bg-white/80 dark:hover:bg-white/10">
-    {{ strtoupper($target) }}
-</a>
+                {{-- Language toggle (URL-based: /en, /tr) --}}
+                <a href="{{ $langUrl }}"
+                   class="me-3 inline-flex items-center justify-center rounded-lg border border-black/10 dark:border-white/10
+                          bg-white/60 dark:bg-white/5 backdrop-blur px-3 py-2 text-sm
+                          text-gray-700 dark:text-white/70 hover:bg-white/80 dark:hover:bg-white/10">
+                    {{ strtoupper($loc) }}
+                </a>
 
                 <!-- Dark mode toggle -->
                 <button type="button"
@@ -130,7 +133,6 @@
                         <a href="{{ route('login') }}" class="text-sm underline text-gray-700 dark:text-white/70">
                             {{ __('ui.nav.login') }}
                         </a>
-                        
                     </div>
                 @endauth
             </div>
@@ -152,23 +154,23 @@
     <!-- Responsive Navigation Menu (Mobile) -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1 px-4">
-            <x-responsive-nav-link :href="route('home') . '#top'">
+            <x-responsive-nav-link :href="$homeUrl . '#top'">
                 {{ __('ui.nav.home') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('home') . '#projects'">
+            <x-responsive-nav-link :href="$homeUrl . '#projects'">
                 {{ __('ui.nav.projects') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('home') . '#stack'">
+            <x-responsive-nav-link :href="$homeUrl . '#stack'">
                 {{ __('ui.nav.stack') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('home') . '#about'">
+            <x-responsive-nav-link :href="$homeUrl . '#about'">
                 {{ __('ui.nav.about') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('home') . '#contact'">
+            <x-responsive-nav-link :href="$homeUrl . '#contact'">
                 {{ __('ui.nav.contact') }}
             </x-responsive-nav-link>
 
@@ -182,8 +184,7 @@
 
             {{-- Mobile toggles row --}}
             <div class="pt-4 pb-4 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
-                @php($loc = app()->getLocale())
-                <a href="{{ route('lang.switch', ['locale' => $loc === 'tr' ? 'en' : 'tr']) }}"
+                <a href="{{ $langUrl }}"
                    class="inline-flex items-center justify-center rounded-lg border border-black/10 dark:border-white/10
                           bg-white/60 dark:bg-white/5 backdrop-blur px-3 py-2 text-sm
                           text-gray-700 dark:text-white/70 hover:bg-white/80 dark:hover:bg-white/10">
@@ -227,7 +228,6 @@
                     <a href="{{ route('login') }}" class="text-sm underline text-gray-700 dark:text-white/70">
                         {{ __('ui.nav.login') }}
                     </a>
-                    
                 </div>
             </div>
         @endauth
