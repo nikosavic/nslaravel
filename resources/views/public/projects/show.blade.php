@@ -4,6 +4,17 @@
 
         <h1 class="text-3xl font-bold">{{ $project->title }}</h1>
 
+        @if($project->image_path)
+    <div class="mt-6">
+        <img
+            src="{{ asset('storage/' . $project->image_path) }}"
+            alt="{{ $project->title }}"
+            class="w-full max-w-5xl rounded-2xl border border-black/10 dark:border-white/10 object-cover"
+            loading="lazy"
+        >
+    </div>
+@endif
+
         @if($project->summary)
             <p class="text-gray-600">{{ $project->summary }}</p>
         @endif
