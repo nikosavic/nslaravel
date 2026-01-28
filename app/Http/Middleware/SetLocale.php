@@ -9,26 +9,26 @@ class SetLocale
 {
     public function handle(Request $request, Closure $next)
     {
-        // 1) Explicit locale from /lang/{locale} route (stored in session)
-        $locale = session('locale');
+        $supported = ['en', 'tr'];
 
-        // 2) If not set, use browser language (Accept-Language)
-        if (!$locale) {
-            $header = strtolower((string) $request->header('accept-language', ''));
-
-            // very simple: if Turkish is anywhere in the header, use tr
-            $locale = str_contains($header, 'tr') ? 'tr' : 'en';
-
-            // store it so next request is consistent
-            session(['locale' => $locale]);
+        // 1) URL locale has priority (/{locale}/...)
+        $routeLocale = $request->route('locale');
+        if (is_string($routeLocale) && in_array($routeLocale, $supported, true)) {
+            app()->setLocale($routeLocale);
+            session(['locale' => $routeLocale]); // keep in sync
+            return $next($request);
         }
 
-        // 3) Apply
-        if (!in_array($locale, ['en', 'tr'], true)) {
-            $locale = 'en';
+        // 2) Session fallback
+        $sessionLocale = session('locale');
+        if (is_string($sessionLocale) && in_array($sessionLocale, $supported, true)) {
+            app()->setLocale($sessionLocale);
+            return $next($request);
         }
 
-        app()->setLocale($locale);
+        // 3) Default fallback
+        app()->setLocale('en');
+        session(['locale' => 'en']);
 
         return $next($request);
     }
