@@ -17,23 +17,31 @@
     @php
         // Current locale from route param (preferred) with fallback
         $loc = request()->route('locale') ?? app()->getLocale();
-        $loc = in_array($loc, ['en','tr']) ? $loc : 'en';
+        $loc = in_array($loc, ['en','tr'], true) ? $loc : 'en';
 
         // Home URL for current locale
         $homeUrl = route('public.home', ['locale' => $loc]);
 
-        // Build "same path, other locale" URL
+        // Target locale
         $target = $loc === 'tr' ? 'en' : 'tr';
 
+        // Build "same path, other locale" URL + keep query + keep hash
         $path = request()->path(); // e.g. "en/projects/foo" or "tr"
         $parts = explode('/', $path);
 
-        if (in_array($parts[0] ?? '', ['en','tr'])) {
+        if (in_array($parts[0] ?? '', ['en','tr'], true)) {
             array_shift($parts);
         }
 
         $newPath = $target . (count($parts) ? '/' . implode('/', $parts) : '');
-        $langUrl = url($newPath);
+
+        // keep query string (if any)
+        $qs = request()->getQueryString();
+        $newUrl = url($newPath) . ($qs ? ('?' . $qs) : '');
+
+        // keep hash/anchor (e.g. #stack) — PHP doesn't get it, so handle client-side:
+        // We'll set data-base-url and then append location.hash via JS on click.
+        $langBaseUrl = $newUrl;
     @endphp
 
     <!-- Primary Navigation Menu -->
@@ -81,12 +89,17 @@
 
             <!-- Right side (Desktop) -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+
                 {{-- Language toggle (URL-based: /en, /tr) --}}
-                <a href="{{ $langUrl }}"
-                   class="me-3 inline-flex items-center justify-center rounded-lg border border-black/10 dark:border-white/10
-                          bg-white/60 dark:bg-white/5 backdrop-blur px-3 py-2 text-sm
-                          text-gray-700 dark:text-white/70 hover:bg-white/80 dark:hover:bg-white/10">
-                    {{ strtoupper($loc) }}
+                <a
+                    href="{{ $langBaseUrl }}"
+                    data-lang-base="{{ $langBaseUrl }}"
+                    onclick="this.href = this.dataset.langBase + (window.location.hash || '');"
+                    class="me-3 inline-flex items-center justify-center rounded-lg border border-black/10 dark:border-white/10
+                           bg-white/60 dark:bg-white/5 backdrop-blur px-3 py-2 text-sm
+                           text-gray-700 dark:text-white/70 hover:bg-white/80 dark:hover:bg-white/10"
+                >
+                    {{ strtoupper($target) }}
                 </a>
 
                 <!-- Dark mode toggle -->
@@ -184,11 +197,15 @@
 
             {{-- Mobile toggles row --}}
             <div class="pt-4 pb-4 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
-                <a href="{{ $langUrl }}"
-                   class="inline-flex items-center justify-center rounded-lg border border-black/10 dark:border-white/10
-                          bg-white/60 dark:bg-white/5 backdrop-blur px-3 py-2 text-sm
-                          text-gray-700 dark:text-white/70 hover:bg-white/80 dark:hover:bg-white/10">
-                    {{ strtoupper($loc) }}
+                <a
+                    href="{{ $langBaseUrl }}"
+                    data-lang-base="{{ $langBaseUrl }}"
+                    onclick="this.href = this.dataset.langBase + (window.location.hash || '');"
+                    class="inline-flex items-center justify-center rounded-lg border border-black/10 dark:border-white/10
+                           bg-white/60 dark:bg-white/5 backdrop-blur px-3 py-2 text-sm
+                           text-gray-700 dark:text-white/70 hover:bg-white/80 dark:hover:bg-white/10"
+                >
+                    {{ strtoupper($target) }}
                 </a>
 
                 <button type="button"
