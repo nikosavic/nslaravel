@@ -29,6 +29,7 @@ APP_ENV=production
 APP_DEBUG=false
 APP_URL=https://nikolasavic.dev
 QUEUE_CONNECTION=database
+DB_QUEUE_RETRY_AFTER=1000
 SESSION_DRIVER=database
 
 STEAM_API_KEY=...
@@ -41,7 +42,31 @@ PlayStation needs no key here: you paste your NPSSO on GameHub → Accounts.
 
 ## 3. Forge: deploy script
 
-Site → Deployments → replace the script with:
+Site → Deployments → replace the script with the one for your kind of site.
+
+**Zero-downtime deployments** (the site path ends in `/current`):
+
+```bash
+$CREATE_RELEASE()
+
+cd $FORGE_RELEASE_DIRECTORY
+
+$FORGE_COMPOSER install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+
+npm ci
+npm run build
+
+$FORGE_PHP artisan storage:link
+$FORGE_PHP artisan migrate --force
+$FORGE_PHP artisan config:cache
+$FORGE_PHP artisan view:cache
+
+$ACTIVATE_RELEASE()
+
+$RESTART_QUEUES()
+```
+
+**Classic deployments** (no `/current` in the path):
 
 ```bash
 cd $FORGE_SITE_PATH
@@ -49,7 +74,6 @@ git pull origin $FORGE_SITE_BRANCH
 
 $FORGE_COMPOSER install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
-# Frontend (Vite writes public/build, which is not in git)
 npm ci
 npm run build
 
@@ -65,11 +89,11 @@ if [ -f artisan ]; then
 fi
 ```
 
-(Do not add `artisan optimize` or `route:cache`: two routes in `routes/web.php` are closures, which cannot be route-cached.)
+(Do not use `artisan optimize` or `route:cache`: two routes in `routes/web.php` are closures, which cannot be route-cached.)
 
 ## 4. Forge: scheduler and queue worker (this is what makes syncing automatic)
 
-* **Scheduler**: Site → Scheduler (or Server → Scheduler) → add `php8.4 /home/forge/nikolasavic.dev/artisan schedule:run`,
+* **Scheduler**: Site → Scheduler (or Server → Scheduler) → add `php8.4 /home/forge/<site folder>/current/artisan schedule:run` (drop `/current` on a classic site),
   every minute. Use the PHP version your site runs. That one entry runs, from `routes/console.php`:
   * `gamehub:sync` every 6 hours (queues one sync per linked account),
   * `gamehub:time-to-beat` daily at 04:00,
