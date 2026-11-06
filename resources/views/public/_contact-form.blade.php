@@ -1,13 +1,11 @@
-@if(session('success'))
-    <div class="p-3 mb-4 rounded border bg-green-50 text-green-800">
-        {{ session('success') }}
-    </div>
+@if (session('success'))
+    <div class="alert-ok" role="status">{{ session('success') }}</div>
 @endif
 
 @if ($errors->any())
-    <div class="p-3 mb-4 rounded border bg-red-50 text-red-800">
-        <div class="font-semibold mb-1">There was a problem:</div>
-        <ul class="list-disc list-inside space-y-1">
+    <div class="alert-bad" role="alert">
+        <div class="mb-1 font-semibold">{{ __('ui.form.problem') }}</div>
+        <ul class="list-inside list-disc space-y-1">
             @foreach ($errors->all() as $error)
                 <li class="text-sm">{{ $error }}</li>
             @endforeach
@@ -15,7 +13,7 @@
     </div>
 @endif
 
-<form method="POST" action="{{ route('public.contact.submit', ['locale' => request()->route('locale')]) }}" class="space-y-4">
+<form method="POST" action="{{ route('public.contact.submit', ['locale' => request()->route('locale') ?? app()->getLocale()]) }}" class="space-y-7">
     @csrf
 
     {{-- Timing anti-bot --}}
@@ -26,24 +24,15 @@
         <input type="hidden" name="cf_token" id="cf_token" value="">
     @endif
 
-    <div class="grid sm:grid-cols-2 gap-4">
+    <div class="grid gap-7 sm:grid-cols-2">
         <div>
-            <label class="text-sm">Name</label>
-            <input name="name"
-                   value="{{ old('name') }}"
-                   class="w-full rounded border p-2 bg-white/80 dark:bg-black/20"
-                   required>
-            @error('name') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+            <label for="contact-name" class="field-label">{{ __('ui.form.name') }}</label>
+            <input id="contact-name" name="name" value="{{ old('name') }}" class="field" autocomplete="name" required>
         </div>
 
         <div>
-            <label class="text-sm">Email</label>
-            <input name="email"
-                   type="email"
-                   value="{{ old('email') }}"
-                   class="w-full rounded border p-2 bg-white/80 dark:bg-black/20"
-                   required>
-            @error('email') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+            <label for="contact-email" class="field-label">{{ __('ui.form.email') }}</label>
+            <input id="contact-email" name="email" type="email" value="{{ old('email') }}" class="field" autocomplete="email" required>
         </div>
     </div>
 
@@ -54,22 +43,14 @@
     </div>
 
     <div>
-        <label class="text-sm">Message</label>
-        <textarea name="message"
-                  rows="6"
-                  class="w-full rounded border p-2 bg-white/80 dark:bg-black/20"
-                  required>{{ old('message') }}</textarea>
-        @error('message') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+        <label for="contact-message" class="field-label">{{ __('ui.form.message') }}</label>
+        <textarea id="contact-message" name="message" rows="5" class="field resize-y" required>{{ old('message') }}</textarea>
     </div>
 
     {{-- Cloudflare Turnstile --}}
     @if (config('services.turnstile.sitekey'))
-        <div class="pt-2">
-            <div
-                class="cf-turnstile"
-                data-sitekey="{{ config('services.turnstile.sitekey') }}"
-                data-callback="onTurnstileSuccess"
-            ></div>
+        <div>
+            <div class="cf-turnstile" data-sitekey="{{ config('services.turnstile.sitekey') }}" data-theme="dark" data-callback="onTurnstileSuccess"></div>
         </div>
 
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
@@ -81,7 +62,5 @@
         </script>
     @endif
 
-    <button class="px-4 py-2 rounded bg-black text-white dark:bg-white dark:text-black">
-        Send
-    </button>
+    <button type="submit" class="btn btn-gold">{{ __('ui.form.send') }}</button>
 </form>

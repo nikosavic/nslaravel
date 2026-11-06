@@ -1,73 +1,22 @@
-<x-app-layout>
-    <div class="max-w-xl mx-auto px-4 py-12 space-y-6">
-        <h1 class="text-3xl font-bold">Contact</h1>
+<x-app-layout :title="__('ui.sections.contact.title')">
+    <section class="section !pb-0">
+        <div class="wrap">
+            <div class="contact-panel px-6 py-12 sm:px-12 sm:py-16">
+                <div class="pointer-events-none absolute -right-10 -top-10 h-24 w-24 rounded-full bg-gold/90 sm:-right-16 sm:-top-16 sm:h-56 sm:w-56" aria-hidden="true"></div>
 
-        @if(session('success'))
-            <div class="p-3 rounded border bg-green-50 text-green-800">{{ session('success') }}</div>
-        @endif
+                <div class="relative grid gap-10 lg:grid-cols-12">
+                    <div class="lg:col-span-5">
+                        <h1 class="section-title text-on-deep">{{ __('ui.sections.contact.title') }}</h1>
+                        <p class="mt-4 max-w-sm text-lg leading-relaxed text-on-deep/80">{{ __('ui.sections.contact.desc') }}</p>
+                    </div>
 
-        <form method="POST" action="{{ route('public.contact.submit', ['locale' => request()->route('locale')]) }}" class="space-y-4">
-            @csrf
-
-            <input type="hidden" name="ts" value="{{ time() }}">
-
-@if (config('services.turnstile.sitekey'))
-    <input type="hidden" name="cf_token" id="cf_token" value="">
-@endif
-
-
-            <input type="hidden" name="ts" value="{{ time() }}">
-
-@if (config('services.turnstile.sitekey'))
-    <input type="hidden" name="cf_token" id="cf_token" value="">
-@endif
-
-
-            <div>
-                <label class="text-sm">Name</label>
-                <input name="name" value="{{ old('name') }}" class="w-full rounded border p-2" required>
-                @error('name') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
+                    <div class="lg:col-span-7">
+                        @include('public._contact-form')
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <div>
-                <label class="text-sm">Email</label>
-                <input name="email" type="email" value="{{ old('email') }}" class="w-full rounded border p-2" required>
-                @error('email') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
-            </div>
-
-            {{-- honeypot --}}
-            <div style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
-    <label>Leave this field empty</label>
-    <input name="website" type="text" tabindex="-1" autocomplete="off" value="">
-</div>
-
-
-            <div>
-                <label class="text-sm">Message</label>
-                <textarea name="message" rows="6" class="w-full rounded border p-2" required>{{ old('message') }}</textarea>
-                @error('message') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
-            </div>
-
-            @if (config('services.turnstile.sitekey'))
-    <div class="pt-2">
-        <div
-            class="cf-turnstile"
-            data-sitekey="{{ config('services.turnstile.sitekey') }}"
-            data-callback="onTurnstileSuccess"
-        ></div>
-    </div>
-
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-    <script>
-        function onTurnstileSuccess(token) {
-            document.getElementById('cf_token').value = token;
-        }
-    </script>
-@endif
-
-
-
-            <button class="px-4 py-2 rounded bg-black text-white">Send</button>
-        </form>
-    </div>
+        @include('layouts.footer')
+    </section>
 </x-app-layout>

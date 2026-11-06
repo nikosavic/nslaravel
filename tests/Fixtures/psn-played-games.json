@@ -1,0 +1,445 @@
+{
+  "titles": [
+    {
+      "titleId": "PPSA02572_00",
+      "name": "Alan Wake 2",
+      "localizedName": "Alan Wake 2",
+      "imageUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202305/2420/c3daf3037feb797d9e71b81618e3b5ff3ff1f9609db5a4a2.png",
+      "localizedImageUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202305/2420/c3daf3037feb797d9e71b81618e3b5ff3ff1f9609db5a4a2.png",
+      "category": "ps5_native_game",
+      "service": "none(purchased)",
+      "sortableName": "alan wake 2",
+      "playCount": 3,
+      "concept": {
+        "id": 10002065,
+        "titleIds": [
+          "CUSA25991_00",
+          "CUSA25992_00",
+          "PPSA02572_00",
+          "PPSA16668_00",
+          "PPSA02571_00"
+        ],
+        "name": "Alan Wake 2",
+        "media": {
+          "audios": [],
+          "videos": [],
+          "images": [
+            {
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202305/2420/2b117db6108244a85769f8009df39f8006b226d8a2831b3a.jpg",
+              "format": "UNKNOWN",
+              "type": "GAMEHUB_COVER_ART"
+            },
+            {
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202305/2420/fbd0dcc88b31805fc7d49f59b8e0e5d0276403cde7fb8cc8.jpg",
+              "format": "UNKNOWN",
+              "type": "PORTRAIT_BANNER"
+            },
+            {
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202305/2420/c3daf3037feb797d9e71b81618e3b5ff3ff1f9609db5a4a2.png",
+              "format": "UNKNOWN",
+              "type": "MASTER"
+            }
+          ]
+        },
+        "genres": [
+          "HORROR"
+        ],
+        "country": "US",
+        "language": "en"
+      },
+      "media": {
+        "audios": [],
+        "videos": [],
+        "images": [
+          {
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202305/2420/2b117db6108244a85769f8009df39f8006b226d8a2831b3a.jpg",
+            "format": "UNKNOWN",
+            "type": "GAMEHUB_COVER_ART"
+          },
+          {
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202305/2420/fbd0dcc88b31805fc7d49f59b8e0e5d0276403cde7fb8cc8.jpg",
+            "format": "UNKNOWN",
+            "type": "PORTRAIT_BANNER"
+          },
+          {
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202305/2420/c3daf3037feb797d9e71b81618e3b5ff3ff1f9609db5a4a2.png",
+            "format": "UNKNOWN",
+            "type": "MASTER"
+          }
+        ]
+      },
+      "firstPlayedDateTime": "2026-10-25T11:56:08.310000Z",
+      "lastPlayedDateTime": "2026-10-27T19:45:09.840000Z",
+      "playDuration": "PT3H40M52S"
+    },
+    {
+      "titleId": "PPSA01532_00",
+      "name": "Assassin's Creed Valhalla",
+      "localizedName": "Assassin's Creed Valhalla",
+      "imageUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202006/1520/EDtkdijFRwbmGKk1G9lrDoEF.png",
+      "localizedImageUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202006/1520/EDtkdijFRwbmGKk1G9lrDoEF.png",
+      "category": "ps5_native_game",
+      "service": "none(purchased)",
+      "sortableName": "assassin's creed valhalla",
+      "playCount": 25,
+      "concept": {
+        "id": 10000237,
+        "titleIds": [
+          "CUSA18524_00",
+          "CUSA18535_00",
+          "CUSA18536_00",
+          "PPSA01533_00",
+          "PPSA01504_00",
+          "PPSA01532_00",
+          "PPSA01490_00",
+          "CUSA18522_00",
+          "CUSA18534_00",
+          "PPSA01491_00"
+        ],
+        "name": "Assassin's Creed Valhalla",
+        "media": {
+          "audios": [],
+          "videos": [],
+          "images": [
+            {
+              "url": "https://image.api.playstation.com/vulcan/img/rnd/202108/1216/xLm0uYOHQdv7KU2nvkBfZuUp.jpg",
+              "format": "UNKNOWN",
+              "type": "GAMEHUB_COVER_ART"
+            },
+            {
+              "url": "https://image.api.playstation.com/vulcan/img/rnd/202011/0302/8jomNsyMYDoJnzFkBrr9Rit2.jpg",
+              "format": "UNKNOWN",
+              "type": "PORTRAIT_BANNER"
+            },
+            {
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202006/1520/EDtkdijFRwbmGKk1G9lrDoEF.png",
+              "format": "UNKNOWN",
+              "type": "MASTER"
+            }
+          ]
+        },
+        "genres": [
+          "ROLE_PLAYING_GAMES"
+        ],
+        "country": "US",
+        "language": "en"
+      },
+      "media": {
+        "audios": [],
+        "videos": [],
+        "images": [
+          {
+            "url": "https://image.api.playstation.com/vulcan/img/rnd/202108/1216/xLm0uYOHQdv7KU2nvkBfZuUp.jpg",
+            "format": "UNKNOWN",
+            "type": "GAMEHUB_COVER_ART"
+          },
+          {
+            "url": "https://image.api.playstation.com/vulcan/img/rnd/202011/0302/8jomNsyMYDoJnzFkBrr9Rit2.jpg",
+            "format": "UNKNOWN",
+            "type": "PORTRAIT_BANNER"
+          },
+          {
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202006/1520/EDtkdijFRwbmGKk1G9lrDoEF.png",
+            "format": "UNKNOWN",
+            "type": "MASTER"
+          }
+        ]
+      },
+      "firstPlayedDateTime": "2026-08-16T17:02:40.870000Z",
+      "lastPlayedDateTime": "2026-10-05T18:29:09.100000Z",
+      "playDuration": "PT44H41M11S"
+    },
+    {
+      "titleId": "PPSA27360_00",
+      "name": "EA SPORTS FC™ 26",
+      "localizedName": "EA SPORTS FC™ 26",
+      "imageUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202608/0314/5217c783f0198d437a0e0e97848d0a3a61c4af84262fd5f2.png",
+      "localizedImageUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202608/0314/5217c783f0198d437a0e0e97848d0a3a61c4af84262fd5f2.png",
+      "category": "ps5_native_game",
+      "service": "none(purchased)",
+      "sortableName": "ea sports fc™ 26",
+      "playCount": 4,
+      "concept": {
+        "id": 10011898,
+        "titleIds": [
+          "CUSA52314_00",
+          "CUSA52342_00",
+          "PPSA27353_00",
+          "CUSA52334_00",
+          "CUSA52816_00",
+          "CUSA52817_00",
+          "PPSA27335_00",
+          "PPSA27360_00",
+          "CUSA50162_00",
+          "PPSA27377_00",
+          "PPSA31830_00"
+        ],
+        "name": "EA SPORTS FC™ 26",
+        "media": {
+          "audios": [],
+          "videos": [],
+          "images": [
+            {
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202608/0314/686e0695e7214ee3deb317c944b04bda4004ce9f783c466e.png",
+              "format": "UNKNOWN",
+              "type": "GAMEHUB_COVER_ART"
+            },
+            {
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202608/0314/9f1f2ff7d315282dad1e123a0011d6979c873e4ec10160f3.png",
+              "format": "UNKNOWN",
+              "type": "PORTRAIT_BANNER"
+            },
+            {
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202608/0314/5217c783f0198d437a0e0e97848d0a3a61c4af84262fd5f2.png",
+              "format": "UNKNOWN",
+              "type": "MASTER"
+            }
+          ]
+        },
+        "genres": [
+          "SPORTS",
+          "SIMULATION"
+        ],
+        "country": "US",
+        "language": "en"
+      },
+      "media": {
+        "audios": [],
+        "videos": [],
+        "images": [
+          {
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202608/0314/686e0695e7214ee3deb317c944b04bda4004ce9f783c466e.png",
+            "format": "UNKNOWN",
+            "type": "GAMEHUB_COVER_ART"
+          },
+          {
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202608/0314/9f1f2ff7d315282dad1e123a0011d6979c873e4ec10160f3.png",
+            "format": "UNKNOWN",
+            "type": "PORTRAIT_BANNER"
+          },
+          {
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202608/0314/5217c783f0198d437a0e0e97848d0a3a61c4af84262fd5f2.png",
+            "format": "UNKNOWN",
+            "type": "MASTER"
+          }
+        ]
+      },
+      "firstPlayedDateTime": "2026-07-30T17:25:59.710000Z",
+      "lastPlayedDateTime": "2026-09-10T18:20:33.980000Z",
+      "playDuration": "PT1M52S"
+    },
+    {
+      "titleId": "PPSA14299_00",
+      "name": "Mafia: The Old Country",
+      "localizedName": "Mafia: The Old Country",
+      "imageUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202504/2416/06f677b905f8794395b855a0de3e9fcb42b567e78c50aaed.png",
+      "localizedImageUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202504/2416/06f677b905f8794395b855a0de3e9fcb42b567e78c50aaed.png",
+      "category": "ps5_native_game",
+      "service": "none(purchased)",
+      "sortableName": "mafia: the old country",
+      "playCount": 14,
+      "concept": {
+        "id": 10007134,
+        "titleIds": [
+          "PPSA14299_00",
+          "PPSA14251_00"
+        ],
+        "name": "Mafia: The Old Country",
+        "media": {
+          "audios": [],
+          "videos": [],
+          "images": [
+            {
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202504/2416/a625fb3c2a502faa490d2ab220fdbdd41f33a77dc41d328c.jpg",
+              "format": "UNKNOWN",
+              "type": "GAMEHUB_COVER_ART"
+            },
+            {
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202504/2416/3a17cd4420cb18ae2dd25416fb25653afb8cbffc0ad5808b.png",
+              "format": "UNKNOWN",
+              "type": "PORTRAIT_BANNER"
+            },
+            {
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202504/2416/06f677b905f8794395b855a0de3e9fcb42b567e78c50aaed.png",
+              "format": "UNKNOWN",
+              "type": "MASTER"
+            }
+          ]
+        },
+        "genres": [
+          "ACTION",
+          "ADVENTURE"
+        ],
+        "country": "US",
+        "language": "en"
+      },
+      "media": {
+        "audios": [],
+        "videos": [],
+        "images": [
+          {
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202504/2416/a625fb3c2a502faa490d2ab220fdbdd41f33a77dc41d328c.jpg",
+            "format": "UNKNOWN",
+            "type": "GAMEHUB_COVER_ART"
+          },
+          {
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202504/2416/3a17cd4420cb18ae2dd25416fb25653afb8cbffc0ad5808b.png",
+            "format": "UNKNOWN",
+            "type": "PORTRAIT_BANNER"
+          },
+          {
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202504/2416/06f677b905f8794395b855a0de3e9fcb42b567e78c50aaed.png",
+            "format": "UNKNOWN",
+            "type": "MASTER"
+          }
+        ]
+      },
+      "firstPlayedDateTime": "2026-07-21T18:29:42.190000Z",
+      "lastPlayedDateTime": "2026-08-12T19:57:13.820000Z",
+      "playDuration": "PT15H45M46S"
+    },
+    {
+      "titleId": "PPSA30523_00",
+      "name": "Red Dead Redemption",
+      "localizedName": "Red Dead Redemption",
+      "imageUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202307/3122/00bd08cf240ede27e4354d3fc7a5b867190df853940366ec.png",
+      "localizedImageUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202307/3122/00bd08cf240ede27e4354d3fc7a5b867190df853940366ec.png",
+      "category": "ps5_native_game",
+      "service": "none(purchased)",
+      "sortableName": "red dead redemption",
+      "playCount": 1,
+      "concept": {
+        "id": 10006164,
+        "titleIds": [
+          "PPSA30528_00",
+          "PPSA30529_00",
+          "CUSA36842_00",
+          "CUSA36843_00",
+          "CUSA36844_00",
+          "CUSA36845_00",
+          "PPSA30523_00",
+          "PPSA30525_00"
+        ],
+        "name": "Red Dead Redemption",
+        "media": {
+          "audios": [],
+          "videos": [],
+          "images": [
+            {
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202308/0215/f6fc45c7b766dafa297a8e9bb57da05357ccfe3f5a6c8f2a.jpg",
+              "format": "UNKNOWN",
+              "type": "GAMEHUB_COVER_ART"
+            },
+            {
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202308/0215/5d3791f0977136cb12752c21058ac27f6d78ac63c9ec55c5.jpg",
+              "format": "UNKNOWN",
+              "type": "PORTRAIT_BANNER"
+            },
+            {
+              "url": "https://image.api.playstation.com/vulcan/ap/rnd/202307/3122/00bd08cf240ede27e4354d3fc7a5b867190df853940366ec.png",
+              "format": "UNKNOWN",
+              "type": "MASTER"
+            }
+          ]
+        },
+        "genres": [
+          "ACTION"
+        ],
+        "country": "US",
+        "language": "en"
+      },
+      "media": {
+        "audios": [],
+        "videos": [],
+        "images": [
+          {
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202308/0215/f6fc45c7b766dafa297a8e9bb57da05357ccfe3f5a6c8f2a.jpg",
+            "format": "UNKNOWN",
+            "type": "GAMEHUB_COVER_ART"
+          },
+          {
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202308/0215/5d3791f0977136cb12752c21058ac27f6d78ac63c9ec55c5.jpg",
+            "format": "UNKNOWN",
+            "type": "PORTRAIT_BANNER"
+          },
+          {
+            "url": "https://image.api.playstation.com/vulcan/ap/rnd/202307/3122/00bd08cf240ede27e4354d3fc7a5b867190df853940366ec.png",
+            "format": "UNKNOWN",
+            "type": "MASTER"
+          }
+        ]
+      },
+      "firstPlayedDateTime": "2026-08-03T17:24:56.830000Z",
+      "lastPlayedDateTime": "2026-08-03T17:38:53.510000Z",
+      "playDuration": "PT13M46S"
+    },
+    {
+      "titleId": "CUSA08519_00",
+      "name": "Red Dead Redemption 2",
+      "localizedName": "Red Dead Redemption 2",
+      "imageUrl": "https://image.api.playstation.com/gs2-sec/appkgo/prod/CUSA08519_00/12/i_3da1cf7c41dc7652f9b639e1680d96436773658668c7dc3930c441291095713b/i/icon0.png",
+      "localizedImageUrl": "https://image.api.playstation.com/gs2-sec/appkgo/prod/CUSA08519_00/12/i_3da1cf7c41dc7652f9b639e1680d96436773658668c7dc3930c441291095713b/i/icon0.png",
+      "category": "ps4_game",
+      "service": "none(purchased)",
+      "sortableName": "red dead redemption 2",
+      "playCount": 17,
+      "concept": {
+        "id": 209441,
+        "titleIds": [
+          "CUSA25251_00",
+          "CUSA25282_00",
+          "CUSA03041_00",
+          "CUSA08568_00",
+          "CUSA11104_00",
+          "CUSA08519_00",
+          "CUSA15698_00"
+        ],
+        "name": "Red Dead Redemption 2",
+        "media": {
+          "audios": [],
+          "videos": [],
+          "images": [
+            {
+              "url": "https://image.api.playstation.com/gs2-sec/appkgo/prod/CUSA08519_00/12/i_3da1cf7c41dc7652f9b639e1680d96436773658668c7dc3930c441291095713b/i/pic0.png",
+              "format": "UNKNOWN",
+              "type": "GAMEHUB_COVER_ART"
+            },
+            {
+              "url": "https://image.api.playstation.com/gs2-sec/appkgo/prod/CUSA08519_00/12/i_3da1cf7c41dc7652f9b639e1680d96436773658668c7dc3930c441291095713b/i/icon0.png",
+              "format": "UNKNOWN",
+              "type": "MASTER"
+            }
+          ]
+        },
+        "genres": [
+          "ADVENTURE",
+          "ACTION"
+        ],
+        "country": "US",
+        "language": "en"
+      },
+      "media": {
+        "audios": [],
+        "videos": [],
+        "images": [
+          {
+            "url": "https://image.api.playstation.com/gs2-sec/appkgo/prod/CUSA08519_00/12/i_3da1cf7c41dc7652f9b639e1680d96436773658668c7dc3930c441291095713b/i/pic0.png",
+            "format": "UNKNOWN",
+            "type": "GAMEHUB_COVER_ART"
+          },
+          {
+            "url": "https://image.api.playstation.com/gs2-sec/appkgo/prod/CUSA08519_00/12/i_3da1cf7c41dc7652f9b639e1680d96436773658668c7dc3930c441291095713b/i/icon0.png",
+            "format": "UNKNOWN",
+            "type": "MASTER"
+          }
+        ]
+      },
+      "firstPlayedDateTime": "2026-06-21T08:51:35.710000Z",
+      "lastPlayedDateTime": "2026-08-02T13:04:37.540000Z",
+      "playDuration": "PT63H58M50S"
+    }
+  ],
+  "nextOffset": null,
+  "previousOffset": 0,
+  "totalItemCount": 6
+}
