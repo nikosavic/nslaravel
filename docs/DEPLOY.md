@@ -69,7 +69,7 @@ fi
 
 ## 4. Forge: scheduler and queue worker (this is what makes syncing automatic)
 
-* **Scheduler**: Site → Scheduler (or Server → Scheduler) → add `php8.3 /home/forge/nikolasavic.dev/artisan schedule:run`,
+* **Scheduler**: Site → Scheduler (or Server → Scheduler) → add `php8.4 /home/forge/nikolasavic.dev/artisan schedule:run`,
   every minute. Use the PHP version your site runs. That one entry runs, from `routes/console.php`:
   * `gamehub:sync` every 6 hours (queues one sync per linked account),
   * `gamehub:time-to-beat` daily at 04:00,
