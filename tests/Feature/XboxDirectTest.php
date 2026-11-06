@@ -138,16 +138,15 @@ class XboxDirectTest extends TestCase
 
     public function test_a_valid_session_is_reused_and_an_expired_one_is_renewed_with_the_rotated_refresh_token(): void
     {
-        $me = User::factory()->admin()->create();
-        $fresh = $this->directAccount($me);
+        // One fake for the whole test: later Http::fake() calls would sit behind an earlier catch-all.
+        Http::fake([self::TOKEN => Http::response($this->msTokens('refresh-2'))] + $this->xblFakes());
 
-        Http::fake();
+        $fresh = $this->directAccount(User::factory()->create());
+
         $this->assertSame('xsts-token', app(XboxLiveClient::class)->session($fresh)['token']);
         Http::assertNothingSent();
 
-        $stale = $this->directAccount(User::factory()->admin()->create(), ['token' => 'old', 'uhs' => 'h', 'xuid' => '1', 'gamertag' => null, 'expires_at' => now()->subHour()->toIso8601String()]);
-
-        Http::fake([self::TOKEN => Http::response($this->msTokens('refresh-2'))] + $this->xblFakes());
+        $stale = $this->directAccount(User::factory()->create(), ['token' => 'old', 'uhs' => 'h', 'xuid' => '1', 'gamertag' => null, 'expires_at' => now()->subHour()->toIso8601String()]);
 
         $session = app(XboxLiveClient::class)->session($stale);
 
@@ -267,7 +266,7 @@ class XboxDirectTest extends TestCase
         Livewire::actingAs(User::factory()->admin()->create())->test(Accounts::class)
             ->assertSee('App registrations')
             ->assertSee('XBOX_CLIENT_ID')
-            ->assertDontSee('Link with Microsoft');
+            ->assertDontSeeHtml('wire:click="startXboxLogin"');
     }
 
     public function test_a_declined_login_shows_a_message_and_clears_the_code(): void

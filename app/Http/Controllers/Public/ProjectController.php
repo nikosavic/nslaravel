@@ -18,7 +18,7 @@ class ProjectController extends Controller
         return view('public.projects.index', compact('projects'));
     }
 
-    public function show(Project $project)
+    public function show(string $locale, Project $project)
     {
         abort_unless($project->status === 'published', 404);
 

@@ -24,9 +24,23 @@ class PlaytimeSnapshotter
             return;
         }
 
-        PlaytimeSnapshot::updateOrCreate(
-            ['library_entry_id' => $entry->id, 'taken_on' => now()->toDateString()],
-            ['minutes' => $minutes],
-        );
+        $today = now()->startOfDay();
+
+        // whereDate: the date column may come back as "2026-11-06" (MySQL) or "2026-11-06 00:00:00" (SQLite).
+        $snapshot = PlaytimeSnapshot::where('library_entry_id', $entry->id)
+            ->whereDate('taken_on', $today->toDateString())
+            ->first();
+
+        if ($snapshot) {
+            $snapshot->update(['minutes' => $minutes]);
+
+            return;
+        }
+
+        PlaytimeSnapshot::create([
+            'library_entry_id' => $entry->id,
+            'taken_on' => $today,
+            'minutes' => $minutes,
+        ]);
     }
 }
