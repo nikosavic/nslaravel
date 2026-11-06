@@ -81,3 +81,14 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+/*
+|--------------------------------------------------------------------------
+| GameHub (/games)
+|--------------------------------------------------------------------------
+| Only registered when Livewire is installed, so a deploy that has not run
+| `composer install` with it yet leaves the rest of the site untouched.
+*/
+if (class_exists(\Livewire\Component::class)) {
+    require __DIR__.'/gamehub.php';
+}

@@ -13,8 +13,18 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ["Inter", "system-ui", "sans-serif"],
-                display: ["Space Grotesk", "Inter", "system-ui", "sans-serif"],
+                sans: ['"Instrument Sans Variable"', ...defaultTheme.fontFamily.sans],
+                display: ['"Bricolage Grotesque Variable"', ...defaultTheme.fontFamily.sans],
+            },
+            // Palette lives in CSS variables (see resources/css/app.css) so light and dark share class names.
+            colors: {
+                paper: "rgb(var(--paper) / <alpha-value>)",
+                panel: "rgb(var(--panel) / <alpha-value>)",
+                ink: "rgb(var(--ink) / <alpha-value>)",
+                deep: "rgb(var(--deep) / <alpha-value>)",
+                "on-deep": "rgb(var(--on-deep) / <alpha-value>)",
+                gold: "rgb(var(--gold) / <alpha-value>)",
+                lilac: "rgb(var(--lilac) / <alpha-value>)",
             },
         },
     },

@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->string('title_en');
-            $table->string('title_tr');
+            $table->string('title_en')->default('');
+            $table->string('title_tr')->default('');
             $table->text('summary_en')->nullable();
             $table->text('summary_tr')->nullable();
             $table->longText('body_en')->nullable();

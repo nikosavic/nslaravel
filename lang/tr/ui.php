@@ -7,6 +7,7 @@ return [
         'projects' => 'Projeler',
         'stack' => 'Teknoloji',
         'about' => 'Hakkımda',
+        'gamehub' => 'GameHub',
         'contact' => 'İletişim',
         'admin_projects' => 'Admin Projeler',
 
@@ -121,5 +122,13 @@ return [
         'linkedin' => 'LinkedIn',
         'instagram' => 'Instagram',
         'copyright' => 'Nikola Savić',
+    ],
+    // CONTACT FORM
+    'form' => [
+        'name' => 'Ad',
+        'email' => 'E-posta',
+        'message' => 'Mesaj',
+        'send' => 'Gönder',
+        'problem' => 'Bir sorun oluştu:',
     ],
 ];

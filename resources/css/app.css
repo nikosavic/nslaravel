@@ -1,59 +1,422 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-html {
-    scroll-behavior: smooth;
-}
-body {
-    @apply font-sans;
+
+/* ------------------------------------------------------------------
+   Palette. Light = mist paper, deep-teal ink. Dark = the same hues, inverted.
+   Values are space-separated RGB so Tailwind can add opacity (bg-ink/10).
+------------------------------------------------------------------- */
+:root {
+    --paper: 233 240 238;
+    --panel: 247 250 249;
+    --ink: 11 37 38;
+    --deep: 14 59 59;
+    --on-deep: 233 240 238;
+    --gold: 255 184 31;
+    --lilac: 185 167 255;
+    color-scheme: light;
 }
 
-h1,
-h2,
-h3 {
-    @apply font-display;
+.dark {
+    --paper: 6 24 25;
+    --panel: 12 40 41;
+    --ink: 230 241 238;
+    --deep: 15 66 64;
+    --on-deep: 230 241 238;
+    color-scheme: dark;
 }
-@keyframes trackingFloat {
-    0%,
+
+@layer base {
+    [x-cloak] {
+        display: none !important;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        @apply bg-paper font-sans text-ink antialiased;
+        font-feature-settings: "ss01", "cv11";
+    }
+
+    h1,
+    h2,
+    h3 {
+        @apply font-display;
+    }
+
+    ::selection {
+        background: rgb(var(--gold));
+        color: #0b2526;
+    }
+
+    :focus-visible {
+        outline: 3px solid rgb(var(--gold));
+        outline-offset: 3px;
+        border-radius: 6px;
+    }
+}
+
+@layer components {
+    .wrap {
+        @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+    }
+
+    /* ---------- section frame: sticky title column + content column ---------- */
+    .section {
+        @apply scroll-mt-20 py-20 sm:py-28;
+    }
+
+    .section-grid {
+        @apply grid gap-10 lg:grid-cols-12 lg:gap-14;
+    }
+
+    .section-head {
+        @apply lg:col-span-4;
+    }
+
+    .section-head > div {
+        @apply lg:sticky lg:top-28;
+    }
+
+    .section-body {
+        @apply lg:col-span-8;
+    }
+
+    .section-title {
+        @apply font-display font-extrabold tracking-tight;
+        font-size: clamp(2.4rem, 5vw, 3.6rem);
+        line-height: 0.95;
+        letter-spacing: -0.035em;
+    }
+
+    .section-desc {
+        @apply mt-4 max-w-sm text-base leading-relaxed text-ink/70;
+    }
+
+    /* ---------- buttons ---------- */
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[15px] font-semibold transition duration-200;
+    }
+
+    .btn-solid {
+        @apply bg-ink text-paper hover:-translate-y-0.5 hover:shadow-[0_8px_0_-2px_rgb(var(--gold))];
+    }
+
+    .btn-line {
+        @apply border-2 border-ink/80 text-ink hover:bg-ink hover:text-paper;
+    }
+
+    .btn-gold {
+        @apply bg-gold text-[#0b2526] hover:-translate-y-0.5 hover:shadow-[0_8px_0_-2px_rgba(255,255,255,.35)];
+    }
+
+    /* ---------- small bits ---------- */
+    .tag {
+        @apply inline-flex items-center rounded-md border border-ink/20 bg-panel/60 px-2.5 py-1 text-sm text-ink/80;
+    }
+
+    .status-line {
+        @apply inline-flex items-center gap-2.5 text-[15px] font-medium text-ink/80;
+    }
+
+    .status-dot {
+        @apply relative inline-block h-2.5 w-2.5 rounded-full bg-gold;
+    }
+
+    .status-dot::after {
+        content: "";
+        @apply absolute inset-0 rounded-full bg-gold;
+        animation: ping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    /* ---------- navigation ---------- */
+    .nav-bar {
+        @apply sticky top-0 z-50 border-b border-ink/10 bg-paper/85 backdrop-blur-xl;
+    }
+
+    .nav-link {
+        @apply relative inline-flex h-16 items-center text-[15px] font-medium text-ink/70 transition hover:text-ink;
+    }
+
+    .nav-link[aria-current="page"],
+    .nav-link.is-active {
+        @apply text-ink;
+    }
+
+    .nav-link::after {
+        content: "";
+        @apply absolute inset-x-0 bottom-0 h-[3px] origin-left scale-x-0 rounded-t bg-gold transition-transform duration-200;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.is-active::after {
+        @apply scale-x-100;
+    }
+
+    .logo-chip {
+        @apply grid h-11 w-11 place-items-center rounded-full bg-white shadow-[0_0_0_2px_rgb(var(--ink)/.12)];
+    }
+
+    .icon-btn {
+        @apply inline-flex h-10 min-w-10 items-center justify-center rounded-full border border-ink/20 px-3 text-sm font-semibold text-ink/80 transition hover:bg-ink hover:text-paper;
+    }
+
+    /* GameHub is a separate app: slanted ultramarine plate with its own four-bar mark. */
+    .gh-pill {
+        @apply relative inline-flex h-10 items-center gap-2.5 px-5 text-[15px] font-bold tracking-wide text-white transition duration-200;
+        font-family: "Bricolage Grotesque Variable", sans-serif;
+        background: linear-gradient(135deg, #1b2bff 0%, #4a5cff 100%);
+        clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+    }
+
+    .gh-pill:hover {
+        @apply -translate-y-0.5;
+        filter: brightness(1.12);
+    }
+
+    .gh-pill svg {
+        @apply h-4 w-4 flex-none;
+    }
+
+    .gh-pill.is-active {
+        box-shadow: inset 0 -4px 0 #ffc83d;
+    }
+
+    /* ---------- hero ---------- */
+    .h1-main {
+        @apply block font-extrabold text-ink;
+        font-size: clamp(3.2rem, 9.4vw, 8rem);
+        line-height: 0.88;
+        letter-spacing: -0.045em;
+    }
+
+    .h1-sub {
+        @apply mt-5 block font-semibold text-ink/55;
+        font-size: clamp(1.25rem, 2.6vw, 2.1rem);
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+    }
+
+    /* Ticket: the featured project, cut like an admission ticket. */
+    .ticket {
+        --stub: 5.25rem;
+        --r: 0.9rem;
+        @apply relative flex min-h-[15rem] text-[#0b2526] transition duration-300;
+        background: rgb(var(--gold));
+        border-radius: 1.1rem;
+        -webkit-mask:
+            radial-gradient(circle var(--r) at calc(100% - var(--stub)) 0, #0000 calc(var(--r) - 1px), #000 var(--r)) top / 100% 51% no-repeat,
+            radial-gradient(circle var(--r) at calc(100% - var(--stub)) 100%, #0000 calc(var(--r) - 1px), #000 var(--r)) bottom / 100% 51% no-repeat;
+        mask:
+            radial-gradient(circle var(--r) at calc(100% - var(--stub)) 0, #0000 calc(var(--r) - 1px), #000 var(--r)) top / 100% 51% no-repeat,
+            radial-gradient(circle var(--r) at calc(100% - var(--stub)) 100%, #0000 calc(var(--r) - 1px), #000 var(--r)) bottom / 100% 51% no-repeat;
+    }
+
+    .ticket-body {
+        @apply flex flex-1 flex-col justify-between gap-6 p-7 sm:p-8;
+    }
+
+    .ticket-stub {
+        @apply relative grid flex-none place-items-center border-l-2 border-dashed border-[#0b2526]/40;
+        width: var(--stub);
+    }
+
+    .ticket-stub span {
+        @apply text-sm font-bold tracking-wide;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+    }
+
+    .ticket-title {
+        @apply font-display font-extrabold;
+        font-size: clamp(1.9rem, 3.4vw, 2.7rem);
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+    }
+
+    /* ---------- projects ---------- */
+    .project-row {
+        @apply grid grid-cols-[1fr_auto] items-center gap-5 border-t-2 border-ink py-6 transition-colors;
+    }
+
+    .project-row.has-img {
+        @apply grid-cols-[auto_1fr_auto];
+    }
+
+    .project-row:last-child {
+        @apply border-b-2;
+    }
+
+    .project-row:hover {
+        background: linear-gradient(90deg, rgb(var(--gold) / 0.22), transparent 70%);
+    }
+
+    .project-thumb {
+        @apply h-16 w-20 flex-none rounded-lg sm:h-20 sm:w-28 border border-ink/15 object-cover;
+    }
+
+    .project-name {
+        @apply font-display text-2xl font-bold tracking-tight;
+        letter-spacing: -0.02em;
+    }
+
+    .project-row:hover .project-name {
+        @apply underline decoration-2 underline-offset-4;
+    }
+
+    .pill {
+        @apply inline-flex items-center rounded-full border border-ink/25 px-2.5 py-0.5 text-xs font-semibold;
+    }
+
+    .pill-gold {
+        @apply border-transparent bg-gold text-[#0b2526];
+    }
+
+    /* ---------- stack ---------- */
+    .spec {
+        @apply border-t-2 border-ink pt-4;
+    }
+
+    .spec-name {
+        @apply font-display text-xl font-bold;
+        letter-spacing: -0.02em;
+    }
+
+    /* ---------- about ---------- */
+    .portrait {
+        @apply relative mx-auto w-full max-w-[19rem] lg:mx-0;
+    }
+
+    .portrait::before {
+        content: "";
+        @apply absolute -bottom-4 -right-4 h-full w-full rounded-full;
+        background: rgb(var(--gold));
+    }
+
+    .portrait::after {
+        content: "";
+        @apply absolute -left-3 top-8 h-16 w-16 rounded-full border-[6px];
+        border-color: rgb(var(--lilac));
+    }
+
+    .portrait img {
+        @apply relative z-10 aspect-square w-full rounded-full object-cover;
+        transform: scale(1);
+        clip-path: circle(49.5%);
+    }
+
+    .check-list li {
+        @apply flex items-start gap-3 py-1.5 text-[15px] text-ink/80;
+    }
+
+    .check-list svg {
+        @apply mt-1 h-4 w-4 flex-none;
+    }
+
+    /* ---------- contact (on the deep panel) ---------- */
+    .contact-panel {
+        @apply relative overflow-hidden rounded-[2rem] bg-deep text-on-deep;
+    }
+
+    .field {
+        @apply block w-full border-0 border-b-2 border-on-deep/40 bg-transparent px-0 py-3 text-lg text-on-deep placeholder:text-on-deep/40 focus:border-gold focus:outline-none focus:ring-0;
+    }
+
+    .field-label {
+        @apply text-sm font-semibold text-on-deep/75;
+    }
+
+    .alert-ok {
+        @apply mb-6 rounded-xl border-2 border-gold bg-gold/15 px-4 py-3 text-on-deep;
+    }
+
+    .alert-bad {
+        @apply mb-6 rounded-xl border-2 border-[#ff8f8f] bg-[#ff8f8f]/15 px-4 py-3 text-on-deep;
+    }
+
+    /* ---------- footer ---------- */
+    .wordmark {
+        @apply select-none whitespace-nowrap font-display font-extrabold text-ink/[0.07];
+        font-size: clamp(3.5rem, 15.5vw, 13rem);
+        line-height: 0.8;
+        letter-spacing: -0.05em;
+    }
+
+    /* ---------- long-form text on project pages ---------- */
+    .case-study {
+        @apply max-w-prose text-lg leading-relaxed text-ink/85;
+    }
+}
+
+/* ------------------------------------------------------------------
+   Motion: one orchestrated hero entrance. Everything else only reacts to the visitor.
+------------------------------------------------------------------- */
+@keyframes rise {
+    from {
+        transform: translateY(105%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes drop {
+    from {
+        opacity: 0;
+        transform: translateY(-28px) rotate(-8deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) rotate(var(--tilt, -3deg));
+    }
+}
+
+@keyframes ping {
+    75%,
     100% {
-        letter-spacing: 0.06em;
-    }
-    50% {
-        letter-spacing: 0.12em;
+        transform: scale(2.4);
+        opacity: 0;
     }
 }
 
-.heading-tracking {
-    letter-spacing: 0.06em;
+.rise-mask {
+    overflow: hidden;
+    /* room for descenders (g, ş, ç) inside the clipping box */
+    padding-bottom: clamp(0.7rem, 2vw, 1.7rem);
+    margin-bottom: calc(-1 * clamp(0.5rem, 1.4vw, 1.2rem));
 }
 
-.heading-tracking:hover {
-    animation: trackingFloat 700ms ease-in-out;
-}
-/* Neon-ish glow for the logo */
-.logo-glow {
-    filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3))
-        drop-shadow(0 0 18px rgba(236, 72, 153, 0.18))
-        drop-shadow(0 0 22px rgba(34, 211, 238, 0.16));
+@media (prefers-reduced-motion: no-preference) {
+    .rise-in {
+        animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+        animation-delay: var(--d, 0ms);
+    }
+
+    .ticket-in {
+        animation: drop 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.15) 0.45s both;
+    }
 }
 
-/* Stronger glow in dark mode */
-.dark .logo-glow {
-    filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.45))
-        drop-shadow(0 0 22px rgba(236, 72, 153, 0.28))
-        drop-shadow(0 0 28px rgba(34, 211, 238, 0.22));
+@media (min-width: 1024px) {
+    .ticket-tilt {
+        --tilt: -3deg;
+        transform: rotate(var(--tilt));
+    }
+
+    .ticket-tilt:hover {
+        transform: rotate(0deg) translateY(-4px);
+    }
 }
-.logo-glow:hover {
-    transform: translateY(-1px);
-    transition: transform 200ms ease;
-}
-.dark .logo-glow:hover {
-    filter: drop-shadow(0 0 14px rgba(99, 102, 241, 0.55))
-        drop-shadow(0 0 26px rgba(236, 72, 153, 0.34))
-        drop-shadow(0 0 34px rgba(34, 211, 238, 0.26));
-}
-footer .logo-glow {
-    filter: drop-shadow(0 0 16px rgba(99, 102, 241, 0.45))
-        drop-shadow(0 0 28px rgba(236, 72, 153, 0.25))
-        drop-shadow(0 0 34px rgba(34, 211, 238, 0.22));
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .status-dot::after {
+        animation: none;
+    }
 }

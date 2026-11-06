@@ -8,6 +8,7 @@ return [
         'projects' => 'Projects',
         'stack' => 'Stack',
         'about' => 'About',
+        'gamehub' => 'GameHub',
         'contact' => 'Contact',
         'admin_projects' => 'Admin Projects',
 
@@ -146,5 +147,13 @@ return [
         'linkedin' => 'LinkedIn',
         'instagram' => 'Instagram',
         'copyright' => 'Nikola Savić — Built with Laravel',
+    ],
+    // CONTACT FORM
+    'form' => [
+        'name' => 'Name',
+        'email' => 'Email',
+        'message' => 'Message',
+        'send' => 'Send',
+        'problem' => 'There was a problem:',
     ],
 ];
