@@ -19,7 +19,7 @@ return new class extends Migration
         $bodyEn = <<<'TXT'
 Stack: Laravel, Livewire, Filament, Horizon, Redis, Strava API, Iyzico
 Role: Founder and developer
-Status: Live
+Status: Archived, not currently hosted
 
 ## The problem
 Running apps record the numbers, but a runner still has to work out what they mean: how hard to train for the next race, when to rest and which finish time is realistic. RunLog turns the runs a runner already records on Strava into that advice, in Turkish and English, for the Turkish running community.
@@ -57,7 +57,7 @@ TXT;
         $bodyTr = <<<'TXT'
 Teknoloji: Laravel, Livewire, Filament, Horizon, Redis, Strava API, Iyzico
 Rol: Kurucu ve geliştirici
-Durum: Yayında
+Durum: Arşivlendi, şu an yayında değil
 
 ## Sorun
 Koşu uygulamaları rakamları kaydeder, ancak bu rakamların ne anlama geldiğini koşucunun kendisi bulmak zorundadır: bir sonraki yarış için ne kadar sert antrenman yapmalı, ne zaman dinlenmeli ve hangi bitiş süresi gerçekçi. RunLog, koşucunun Strava'da zaten kaydettiği koşuları Türk koşu topluluğu için Türkçe ve İngilizce tavsiyeye dönüştürür.
@@ -105,7 +105,7 @@ TXT;
             'body' => $bodyEn,
             'body_en' => $bodyEn,
             'body_tr' => $bodyTr,
-            'live_url' => 'https://runlog.app',
+            'live_url' => null,
             'featured' => false,
             'sort_order' => 50,
             'status' => 'published',

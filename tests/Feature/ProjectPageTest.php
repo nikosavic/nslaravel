@@ -100,7 +100,7 @@ class ProjectPageTest extends TestCase
     {
         $this->get('/en/projects/runlog')->assertOk()
             ->assertSee('<h2>The problem</h2>', false)
-            ->assertSee('https://runlog.app');
+            ->assertSee('Archived, not currently hosted');
 
         $this->get('/tr/projects/runlog')->assertOk()
             ->assertSee('<h2>Sorun</h2>', false);
