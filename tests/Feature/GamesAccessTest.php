@@ -57,8 +57,9 @@ class GamesAccessTest extends TestCase
         $owner = User::factory()->admin()->create();
         $owner->forceFill(['is_public' => true, 'public_slug' => 'niko'])->save();
 
-        $this->get('/games')->assertRedirect('/games/u/niko');
-        $this->get('/games/u/niko')->assertOk()->assertSee('noindex', false);
+        // The short address shows the page itself, no redirect.
+        $this->get('/games')->assertOk()->assertSee('Niko')->assertSee('LinkedIn')->assertSee('Instagram');
+        $this->get('/games/u/niko')->assertOk()->assertSee('Niko');
     }
 
     public function test_a_private_profile_is_a_404(): void

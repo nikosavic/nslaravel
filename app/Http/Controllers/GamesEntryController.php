@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 /**
  * The "GameHub" menu entry points here.
  *  - the site admin goes straight to the library,
- *  - a visitor sees the admin's public profile when one is switched on,
+ *  - a visitor sees the admin's public profile right here at /games when one is switched on,
  *  - otherwise a guest is asked to sign in and anyone else gets a 404.
  */
 class GamesEntryController extends Controller
@@ -29,7 +29,7 @@ class GamesEntryController extends Controller
             ->first();
 
         if ($owner) {
-            return redirect()->route('games.profile.public', $owner->public_slug);
+            return view('games.public', ['slug' => $owner->public_slug]);
         }
 
         abort_if($user, 404);

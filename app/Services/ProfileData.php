@@ -8,8 +8,8 @@ use App\Models\LibraryEntry;
 use App\Models\User;
 
 /**
- * Everything the public profile page and the share card show. Deliberately small: game titles, covers, hours,
- * counts and the handle. No email, no linked account names, no notes, no ratings, no dates of play.
+ * Everything the public profile page and the share card show: game titles, covers, hours, ratings, trophy counts
+ * and the handle. Never the email, linked account names, notes or dates of play.
  */
 class ProfileData
 {
@@ -22,7 +22,8 @@ class ProfileData
      *   handle: ?string, games: int, hours: int, finished: int, yearHours: int,
      *   statuses: list<array{key:string,label:string,color:string,count:int}>,
      *   playing: list<LibraryEntry>, recentlyFinished: list<LibraryEntry>, top: list<LibraryEntry>,
-     *   achievements: array{unlocked:int,total:int}
+     *   achievements: array{unlocked:int,total:int}, platinums: int, avgRating: ?float, ratedCount: int,
+     *   topRated: list<LibraryEntry>
      * }
      */
     public function for(User $user): array
@@ -42,6 +43,7 @@ class ProfileData
         $finished = $entries->filter(fn (LibraryEntry $e) => $e->status->isFinal());
 
         $withAchievements = $entries->where('achievements_total', '>', 0);
+        $rated = $entries->filter(fn (LibraryEntry $e) => (int) $e->rating > 0);
 
         return [
             'handle' => $user->public_slug,
@@ -57,6 +59,10 @@ class ProfileData
                 'unlocked' => (int) $withAchievements->sum('achievements_unlocked'),
                 'total' => (int) $withAchievements->sum('achievements_total'),
             ],
+            'platinums' => $entries->filter(fn (LibraryEntry $e) => $e->hasPlatinum())->count(),
+            'avgRating' => $rated->isEmpty() ? null : round((float) $rated->avg('rating'), 1),
+            'ratedCount' => $rated->count(),
+            'topRated' => $rated->sortBy([['rating', 'desc'], ['playtime_minutes', 'desc']])->take(6)->values()->all(),
         ];
     }
 

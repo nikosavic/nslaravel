@@ -54,9 +54,41 @@ class GameHubProfileTest extends TestCase
         $response->assertOk()
             ->assertSee('Hades')
             ->assertSee('Celeste')
-            ->assertSee('noindex', false)
             ->assertDontSee('secret.person@example.com')
-            ->assertDontSee('PRIVATE NOTE');
+            ->assertDontSee('PRIVATE NOTE')
+            ->assertDontSee('noindex', false);
+    }
+
+    public function test_ratings_and_trophies_are_shown_on_the_public_page(): void
+    {
+        $user = $this->publicUser();
+        $this->entry($user, 'Alan Wake 2', 'finished', 1800, [
+            'rating' => 9, 'achievements_unlocked' => 40, 'achievements_total' => 50, 'trophies' => ['platinum' => 1],
+        ]);
+        $this->entry($user, 'Celeste', 'backlog', 0);
+
+        $this->get('/games')->assertOk()
+            ->assertSee('Alan Wake 2')
+            ->assertSee('Rated 9 out of 10')
+            ->assertSee('40')
+            ->assertSee('Platinum');
+    }
+
+    public function test_the_public_page_filters_and_loads_more(): void
+    {
+        $user = $this->publicUser();
+        $this->entry($user, 'Hades', 'playing', 3000);
+        $this->entry($user, 'Celeste', 'finished', 600, ['finished_at' => now(), 'rating' => 10]);
+
+        \Livewire\Livewire::test(\App\Livewire\PublicProfile::class, ['slug' => 'niko'])
+            ->set('status', 'finished')
+            ->assertSee('Celeste')
+            ->set('search', 'zzzz')
+            ->assertSee('No games match')
+            ->call('clearFilters')
+            ->assertSee('Hades')
+            ->set('sort', 'rating')
+            ->assertSee('Celeste');
     }
 
     public function test_private_and_unknown_profiles_are_a_plain_404(): void
@@ -142,6 +174,8 @@ class GameHubProfileTest extends TestCase
         $this->assertSame(2, $data['games']);
         $this->assertSame(102, $data['hours']);
         $this->assertSame(1, $data['finished']);
+        $this->assertNull($data['avgRating']);
+        $this->assertSame(0, $data['platinums']);
 
         $card = $profiles->card($data);
         $this->assertSame('niko', $card['handle']);
