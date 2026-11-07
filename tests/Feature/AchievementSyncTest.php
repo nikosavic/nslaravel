@@ -165,6 +165,26 @@ class AchievementSyncTest extends TestCase
         $this->assertNull($other->fresh()->achievements_total);
     }
 
+    public function test_psn_matches_roman_numerals_with_digits(): void
+    {
+        $me = User::factory()->admin()->create();
+        $account = $this->account($me, ProviderType::Playstation, '1234');
+        $entry = $this->entry($me, $account, 'Alan Wake 2', 'ps5');
+
+        Http::fake([
+            'm.np.playstation.com/api/trophy/v1/users/me/trophyTitles*' => Http::response(['trophyTitles' => [[
+                'trophyTitleName' => 'Alan Wake II',
+                'trophyTitlePlatform' => 'PS5',
+                'definedTrophies' => ['bronze' => 30, 'silver' => 10, 'gold' => 5, 'platinum' => 1],
+                'earnedTrophies' => ['bronze' => 3, 'silver' => 0, 'gold' => 0, 'platinum' => 0],
+            ]]]),
+        ]);
+
+        app(AchievementSyncService::class)->sync($account);
+
+        $this->assertSame([3, 46], [$entry->fresh()->achievements_unlocked, $entry->fresh()->achievements_total]);
+    }
+
     public function test_achievements_show_on_the_library_card(): void
     {
         $me = User::factory()->admin()->create();
