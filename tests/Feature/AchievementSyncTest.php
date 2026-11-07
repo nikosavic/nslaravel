@@ -143,6 +143,28 @@ class AchievementSyncTest extends TestCase
         $this->assertFalse($entry->fresh()->hasPlatinum());
     }
 
+    public function test_psn_matches_titles_that_only_differ_by_edition_words(): void
+    {
+        $me = User::factory()->admin()->create();
+        $account = $this->account($me, ProviderType::Playstation, '1234');
+        $entry = $this->entry($me, $account, 'Hogwarts Legacy', 'ps5');
+        $other = $this->entry($me, $account, 'Resident Evil', 'ps5');
+
+        Http::fake([
+            'm.np.playstation.com/api/trophy/v1/users/me/trophyTitles*' => Http::response(['trophyTitles' => [[
+                'trophyTitleName' => 'Hogwarts Legacy Digital Deluxe Edition Trophies',
+                'trophyTitlePlatform' => 'PS5',
+                'definedTrophies' => ['bronze' => 40, 'silver' => 10, 'gold' => 5, 'platinum' => 1],
+                'earnedTrophies' => ['bronze' => 10, 'silver' => 0, 'gold' => 0, 'platinum' => 0],
+            ]]]),
+        ]);
+
+        app(AchievementSyncService::class)->sync($account);
+
+        $this->assertSame([10, 56], [$entry->fresh()->achievements_unlocked, $entry->fresh()->achievements_total]);
+        $this->assertNull($other->fresh()->achievements_total);
+    }
+
     public function test_achievements_show_on_the_library_card(): void
     {
         $me = User::factory()->admin()->create();

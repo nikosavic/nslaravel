@@ -31,12 +31,13 @@ class AchievementSyncService
         }
 
         $byTitle = null;
+        $bySimpleTitle = null;
         $updated = 0;
 
         foreach ($provider->fetchAchievements($account) as $progress) {
             $entries = $progress->externalId !== null
                 ? $this->entriesByExternalId($account, $progress)
-                : $this->entriesByTitle($account, $progress, $byTitle);
+                : $this->entriesByTitle($account, $progress, $byTitle, $bySimpleTitle);
 
             foreach ($entries as $entry) {
                 $entry->update([
@@ -73,7 +74,7 @@ class AchievementSyncService
      * @param  Collection<string, Collection<int, LibraryEntry>>|null  $index  built once per run
      * @return Collection<int, LibraryEntry>
      */
-    private function entriesByTitle(LinkedAccount $account, AchievementProgress $progress, ?Collection &$index): Collection
+    private function entriesByTitle(LinkedAccount $account, AchievementProgress $progress, ?Collection &$index, ?Collection &$simpleIndex): Collection
     {
         $index ??= LibraryEntry::with(['game', 'platform'])
             ->where('user_id', $account->user_id)
@@ -82,6 +83,12 @@ class AchievementSyncService
             ->groupBy(fn (LibraryEntry $e) => IgdbClient::normalize($e->game->title));
 
         $matches = $index->get(IgdbClient::normalize((string) $progress->title), collect());
+
+        // No exact match: try again ignoring edition words, so "Game Deluxe Edition" or "Game PS5" still finds "Game".
+        if ($matches->isEmpty()) {
+            $simpleIndex ??= $index->flatten(1)->groupBy(fn (LibraryEntry $e) => self::simplify($e->game->title));
+            $matches = $simpleIndex->get(self::simplify((string) $progress->title), collect());
+        }
 
         if ($progress->platformSlug !== null) {
             $samePlatform = $matches->filter(fn (LibraryEntry $e) => $e->platform->slug === $progress->platformSlug);
@@ -93,5 +100,15 @@ class AchievementSyncService
         }
 
         return $matches->values();
+    }
+
+    /** Title with edition / platform words removed, for the fallback match. Equality only, never a partial match. */
+    public static function simplify(string $title): string
+    {
+        $t = IgdbClient::normalize($title);
+        $t = preg_replace('/\b(ps4|ps5|ps vita|playstation 4|playstation 5|digital|deluxe|ultimate|standard|premium|special|collector s|complete|definitive|enhanced|anniversary|goty|game of the year|remastered|remaster|edition|version|director s cut|cross gen|bundle|trophy set|trophies|trophy)\b/u', ' ', $t) ?? $t;
+        $t = preg_replace('/^the\s+/u', '', trim(preg_replace('/\s+/u', ' ', $t) ?? $t)) ?? $t;
+
+        return trim($t);
     }
 }
