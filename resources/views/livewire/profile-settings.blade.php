@@ -36,9 +36,9 @@
             @endif
 
             <p class="provider-note">
-                A public page shows your link name, how many games and hours you have, your status mix, what you are playing,
-                what you finished lately and your most played games. It never shows your email, linked account names, notes,
-                ratings or when you played. Search engines are asked not to list it, and turning it off returns a 404.
+                A public page shows your link name, your games with their status, hours, ratings and trophy counts, what you are
+                playing now and your totals. It never shows your email, linked account names, notes or when you played.
+                Visitors who open /games see it, and turning it off returns a 404.
             </p>
         </section>
 

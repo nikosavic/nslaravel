@@ -627,3 +627,39 @@ code { font-size: .92em; padding: 1px 6px; background: var(--raised); border-rad
     .hero-copy { padding: 24px 20px 28px; }
     .login-card { padding: 28px 22px; }
 }
+
+/* ---- Public profile ---- */
+.profile-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.social {
+    --cut: 9px;
+    display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 24px 0 20px;
+    background: var(--raised); color: var(--text); font-weight: 700; font-size: 15px; text-decoration: none;
+    clip-path: polygon(var(--cut) 0, 100% 0, calc(100% - var(--cut)) 100%, 0 100%);
+    transition: background-color .15s, color .15s;
+}
+.social svg { width: 19px; height: 19px; flex: none; }
+.social:hover, .social:focus-visible { outline: none; background: var(--playing); color: #1a1300; }
+
+.art-rate {
+    --cut: 8px;
+    position: absolute; top: 12px; right: 12px; z-index: 2;
+    display: inline-flex; align-items: baseline; gap: 2px; padding: 7px 16px 7px 14px;
+    font: 900 24px/1 var(--font-display); letter-spacing: .01em; font-variant-numeric: tabular-nums;
+    color: #1a1300; background: var(--playing);
+    clip-path: polygon(var(--cut) 0, 100% 0, calc(100% - var(--cut)) 100%, 0 100%);
+}
+.art-rate small { font: 700 12px/1 var(--font-body); opacity: .65; }
+
+.status-chip { color: var(--st); font-weight: 600; }
+.status-chip i { width: 7px; height: 13px; background: var(--st); transform: skewX(-18deg); flex: none; }
+
+.meter { height: 4px; background: var(--raised); margin-top: auto; }
+.meter i { display: block; width: var(--w); height: 100%; background: #bfe0ff; }
+
+.more-wrap { display: flex; justify-content: center; margin-top: 44px; }
+.rank-rate b { color: var(--playing); }
+.hero-public .hero-copy { padding-bottom: 52px; }
+
+@media (max-width: 640px) {
+    .social { flex: 1 1 auto; justify-content: center; }
+}
