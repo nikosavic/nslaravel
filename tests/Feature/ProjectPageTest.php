@@ -41,4 +41,25 @@ class ProjectPageTest extends TestCase
             ->assertSee('<h2>Overview</h2>', false)
             ->assertSee('<li>Two</li>', false);
     }
+
+    public function test_the_runsphere_migration_restructures_plain_text_once(): void
+    {
+        $project = Project::create([
+            'title' => 'RunSphere', 'slug' => 'runsphere-ticket-platform', 'status' => 'published',
+            'body_en' => "Overview\nPlain old text.", 'body_tr' => "Genel\nDüz metin.",
+        ]);
+
+        $migration = require database_path('migrations/2026_11_07_110000_restructure_runsphere_case_study.php');
+        $migration->up();
+
+        $this->assertStringContainsString('## Key features', $project->fresh()->body_en);
+        $this->assertStringContainsString('## Temel özellikler', $project->fresh()->body_tr);
+
+        // An edit made afterwards is left alone.
+        $project->update(['body_en' => "## My own\nedit"]);
+        $migration->up();
+        $this->assertSame("## My own\nedit", $project->fresh()->body_en);
+
+        $this->get('/en/projects/runsphere-ticket-platform')->assertOk()->assertSee('<h2>My own</h2>', false);
+    }
 }
