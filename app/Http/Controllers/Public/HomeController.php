@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Services\RunLogFeed;
 
 class HomeController extends Controller
 {
@@ -25,7 +26,9 @@ class HomeController extends Controller
         ->take(6)
         ->get();
 
-    return view('public.home', compact('heroProject', 'featured'));
+    $runlog = RunLogFeed::get();
+
+    return view('public.home', compact('heroProject', 'featured', 'runlog'));
 }
 
 }

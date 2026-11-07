@@ -45,5 +45,10 @@ return [
         'sitekey' => env('TURNSTILE_SITEKEY'),
         'secret'  => env('TURNSTILE_SECRET'),
     ],
+    'runlog' => [
+        'url'  => env('RUNLOG_URL', 'https://runlog.app'),
+        // The runner's public slug on RunLog. Leave empty to hide the RunLog link and recent runs.
+        'slug' => env('RUNLOG_SLUG'),
+    ],
 
 ];
