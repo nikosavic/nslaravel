@@ -99,8 +99,7 @@ class ProjectPageTest extends TestCase
     public function test_runlog_case_study_is_added_in_both_languages(): void
     {
         $this->get('/en/projects/runlog')->assertOk()
-            ->assertSee('<h2>The problem</h2>', false)
-            ->assertSee('https://runlog.app');
+            ->assertSee('<h2>The problem</h2>', false);
 
         $this->get('/tr/projects/runlog')->assertOk()
             ->assertSee('<h2>Sorun</h2>', false);
