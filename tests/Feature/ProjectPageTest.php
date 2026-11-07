@@ -105,4 +105,14 @@ class ProjectPageTest extends TestCase
         $this->get('/tr/projects/runlog')->assertOk()
             ->assertSee('<h2>Sorun</h2>', false);
     }
+
+    public function test_runlog_is_marked_archived_without_a_live_link(): void
+    {
+        $this->get('/en/projects/runlog')->assertOk()
+            ->assertSee('Archived, not currently hosted')
+            ->assertDontSee('https://runlog.app');
+
+        $this->get('/tr/projects/runlog')->assertOk()
+            ->assertSee('Arşivlendi');
+    }
 }
