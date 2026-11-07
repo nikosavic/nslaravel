@@ -115,7 +115,9 @@
                 <h2 class="section-title">Most played</h2>
 
                 @forelse ($profile['top'] as $entry)
-                    @php($t = Format::duration((int) $entry->playtime_minutes))
+                    @php
+                        $t = Format::duration((int) $entry->playtime_minutes);
+                    @endphp
                     <div class="rank" style="--pc: {{ $entry->platform->color() }}; --w: {{ round($entry->playtime_minutes / $maxTop * 100) }}%">
                         <div class="rank-name"><span>{{ $entry->game->title }}</span><b>{{ $t[0] }} <small>{{ $t[1] }}</small></b></div>
                         <i></i>
