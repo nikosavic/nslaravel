@@ -106,6 +106,8 @@ class AchievementSyncService
     public static function simplify(string $title): string
     {
         $t = IgdbClient::normalize($title);
+        // "Alan Wake II" and "Alan Wake 2" are the same game. Single "i", "v" and "x" are left alone (too ambiguous).
+        $t = preg_replace_callback('/\b(ii|iii|iv|vi|vii|viii|ix)\b/u', fn ($m) => (string) ['ii' => 2, 'iii' => 3, 'iv' => 4, 'vi' => 6, 'vii' => 7, 'viii' => 8, 'ix' => 9][$m[1]], $t) ?? $t;
         $t = preg_replace('/\b(ps4|ps5|ps vita|playstation 4|playstation 5|digital|deluxe|ultimate|standard|premium|special|collector s|complete|definitive|enhanced|anniversary|goty|game of the year|remastered|remaster|edition|version|director s cut|cross gen|bundle|trophy set|trophies|trophy)\b/u', ' ', $t) ?? $t;
         $t = preg_replace('/^the\s+/u', '', trim(preg_replace('/\s+/u', ' ', $t) ?? $t)) ?? $t;
 
