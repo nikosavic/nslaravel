@@ -88,9 +88,11 @@ class ProjectPageTest extends TestCase
     {
         $this->get('/en/projects/race-timing')->assertOk()
             ->assertSee('<h2>The problem</h2>', false)
-            ->assertSee('Working prototype');
+            ->assertSee('Working prototype')
+            ->assertSee('RFID readers pick up the chip');
 
         $this->get('/tr/projects/race-timing')->assertOk()
-            ->assertSee('<h2>Sorun</h2>', false);
+            ->assertSee('<h2>Sorun</h2>', false)
+            ->assertSee('RFID okuyucular');
     }
 }

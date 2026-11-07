@@ -26,7 +26,8 @@ On race day, results often mean stopwatches, paper lists and a spreadsheet that 
 
 ## What it does
 - Organisers create events and races, set the timing points (start, splits, finish) and import the participant list from a file
-- Volunteers record runners with a phone: a printed QR label on each bib opens the timing page for that checkpoint with the bib number filled in, one tap records the crossing and an undo fixes a mistake
+- In this version, volunteers record runners with a phone: a printed QR label on each bib opens the timing page for that checkpoint with the bib number filled in, one tap records the crossing and an undo fixes a mistake
+- In a real race, RFID readers pick up the chip on each runner's bib and send the reads to the same timing service, so nobody has to scan anything by hand
 - A live leaderboard updates by itself while the race runs
 - Every runner gets split times, a pace and a predicted finish time while still on the course
 - Rankings overall, by gender, by age category, for runners who did not finish and for those who did not start, each with a CSV export
@@ -45,7 +46,7 @@ On race day, results often mean stopwatches, paper lists and a spreadsheet that 
 ## Challenges
 - Reads that arrive out of order: a late mark from the middle of the course can reach the server after the finish, so late reads are ignored and a final result is never overwritten
 - Predicting a finish while the runner is still on the course: the pace comes from the farthest split reached and is replaced by the real time at the finish
-- Timing without special hardware: a QR label and a web page turn any phone into a timing station
+- Building without the hardware: a QR label and a web page turn any phone into a stand-in for an RFID reader, so the whole chain can be built and tested before a single chip reader is installed, and the timing service accepts reads from any source
 TXT;
 
         $bodyTr = <<<'TXT'
@@ -58,7 +59,8 @@ Yarış gününde sonuçlar çoğu zaman kronometreler, kağıt listeler ve sonr
 
 ## Ne yapıyor
 - Organizatörler etkinlik ve yarış oluşturur, zamanlama noktalarını (başlangıç, ara noktalar, bitiş) belirler ve katılımcı listesini bir dosyadan içe aktarır
-- Gönüllüler koşucuları telefonla kaydeder: her göğüs numarasındaki basılı QR etiketi o kontrol noktasının zamanlama sayfasını numara dolu olarak açar, tek dokunuş geçişi kaydeder ve geri alma hatayı düzeltir
+- Bu sürümde gönüllüler koşucuları telefonla kaydeder: her göğüs numarasındaki basılı QR etiketi o kontrol noktasının zamanlama sayfasını numara dolu olarak açar, tek dokunuş geçişi kaydeder ve geri alma hatayı düzeltir
+- Gerçek bir yarışta RFID okuyucular her koşucunun göğüs numarasındaki çipi okur ve okumaları aynı zamanlama servisine gönderir; kimsenin elle bir şey okutması gerekmez
 - Canlı sıralama yarış sürerken kendiliğinden güncellenir
 - Her koşucu için parkurdayken ara süreler, tempo ve tahmini bitiş süresi hesaplanır
 - Genel, cinsiyete göre, yaş kategorisine göre, bitirmeyenler ve başlamayanlar için sıralamalar; hepsinde CSV dışa aktarma
@@ -77,7 +79,7 @@ Yarış gününde sonuçlar çoğu zaman kronometreler, kağıt listeler ve sonr
 ## Zorluklar
 - Sırasız gelen okumalar: parkurun ortasından geç bir işaret bitişten sonra sunucuya ulaşabilir; bu yüzden geç okumalar yok sayılır ve kesinleşmiş bir sonuç asla ezilmez
 - Koşucu hâlâ parkurdayken bitiş tahmini: tempo ulaşılan en uzak ara noktadan alınır ve bitişte gerçek süreyle değiştirilir
-- Özel donanım olmadan zamanlama: bir QR etiketi ve bir web sayfası her telefonu zamanlama istasyonuna çevirir
+- Donanım olmadan geliştirme: bir QR etiketi ve bir web sayfası her telefonu RFID okuyucunun yerine geçirir; böylece tek bir çip okuyucu kurulmadan tüm zincir geliştirilip test edilebilir ve zamanlama servisi her kaynaktan okuma kabul eder
 TXT;
 
         $now = now();
@@ -87,9 +89,9 @@ TXT;
             'title_en' => 'Race Timing',
             'title_tr' => 'Race Timing',
             'slug' => 'race-timing',
-            'summary' => 'Live race timing: phones record checkpoint crossings, a Go service builds the results and a live leaderboard updates while the race runs.',
-            'summary_en' => 'Live race timing: phones record checkpoint crossings, a Go service builds the results and a live leaderboard updates while the race runs.',
-            'summary_tr' => 'Canlı yarış zamanlaması: telefonlar kontrol noktası geçişlerini kaydeder, bir Go servisi sonuçları oluşturur ve canlı sıralama yarış sürerken güncellenir.',
+            'summary' => 'Live race timing: checkpoint reads build the results and a live leaderboard updates while the race runs. Phones stand in for RFID chip readers in this version.',
+            'summary_en' => 'Live race timing: checkpoint reads build the results and a live leaderboard updates while the race runs. Phones stand in for RFID chip readers in this version.',
+            'summary_tr' => 'Canlı yarış zamanlaması: kontrol noktası okumaları sonuçları oluşturur ve canlı sıralama yarış sürerken güncellenir. Bu sürümde telefonlar RFID çip okuyucuların yerini tutar.',
             'body' => $bodyEn,
             'body_en' => $bodyEn,
             'body_tr' => $bodyTr,
