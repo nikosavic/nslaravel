@@ -62,4 +62,15 @@ class ProjectPageTest extends TestCase
 
         $this->get('/en/projects/runsphere-ticket-platform')->assertOk()->assertSee('<h2>My own</h2>', false);
     }
+
+    public function test_tuneout_case_study_is_added_in_both_languages(): void
+    {
+        $this->get('/en/projects/tuneout')->assertOk()
+            ->assertSee('<h2>The problem</h2>', false)
+            ->assertSee('Work in progress');
+
+        $this->get('/tr/projects/tuneout')->assertOk()
+            ->assertSee('<h2>Sorun</h2>', false)
+            ->assertSee('Geliştirme sürüyor');
+    }
 }
