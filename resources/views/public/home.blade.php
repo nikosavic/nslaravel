@@ -138,6 +138,58 @@
         </div>
     </section>
 
+    {{-- ============================ RECENT RUNS ============================ --}}
+    @if ($runlog)
+        @php
+            $rl = $runlog;
+            $rlStats = $rl['stats'];
+            $rlRuns = array_slice($rl['runs'], 0, 5);
+            $rlUrl = \App\Services\RunLogFeed::profileUrl($locale);
+        @endphp
+        <section id="runs" class="section">
+            <div class="wrap section-grid">
+                <div class="section-head">
+                    <div>
+                        <h2 class="section-title">{{ __('ui.sections.runlog.title') }}</h2>
+                        <p class="section-desc">{{ __('ui.sections.runlog.desc') }}</p>
+                    </div>
+                </div>
+
+                <div class="section-body">
+                    <p class="text-[15px] text-ink/70">
+                        <strong class="font-display text-2xl text-ink">{{ number_format($rlStats['distance_km'], 1) }} km</strong>
+                        {{ __('ui.sections.runlog.year', ['year' => $rl['year']]) }}
+                        · {{ $rlStats['runs'] }} {{ __('ui.sections.runlog.runs') }}
+                        @if ($rlStats['avg_pace'])
+                            · {{ $rlStats['avg_pace'] }}/km {{ __('ui.sections.runlog.avg') }}
+                        @endif
+                        · {{ number_format($rlStats['longest_km'], 1) }} km {{ __('ui.sections.runlog.longest') }}
+                    </p>
+
+                    <div class="mt-5">
+                        @foreach ($rlRuns as $run)
+                            <div class="project-row" style="grid-template-columns: 1fr auto;">
+                                <div>
+                                    <span class="project-name">{{ number_format($run['distance_km'], 2) }} km</span>
+                                    <span class="ml-3 text-[15px] text-ink/70">{{ $run['duration'] }} · {{ $run['pace'] }}/km</span>
+                                </div>
+                                <span class="pill">{{ \Carbon\Carbon::parse($run['date'])->locale($locale)->translatedFormat('j M') }}</span>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="mt-8">
+                        <a href="{{ $rlUrl }}" target="_blank" rel="noopener"
+                           class="inline-flex items-center gap-2 font-semibold underline decoration-2 underline-offset-4 decoration-gold hover:decoration-ink">
+                            {{ __('ui.sections.runlog.open') }}
+                            <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endif
+
     {{-- ============================== STACK ============================== --}}
     <section id="stack" class="section bg-panel">
         <div class="wrap section-grid">

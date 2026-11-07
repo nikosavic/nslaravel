@@ -30,6 +30,8 @@
     $isAdmin = auth()->check() && auth()->user()->role === 'admin';
     $hasGames = Route::has('games.entry');
     $inGames = request()->routeIs('games.*');
+    $runlogUrl = \App\Services\RunLogFeed::profileUrl($loc);
+    $runlogIcon = '<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 4a1 1 0 1 0 2 0a1 1 0 0 0-2 0"/><path d="M4 17l5 1l.75-1.5M15 21v-4l-4-3l1-6"/><path d="M7 12v-3l5-1l3 3l3 1"/></svg>';
 @endphp
 
 <nav
@@ -66,6 +68,13 @@
 
         {{-- Desktop right side --}}
         <div class="hidden items-center gap-2.5 md:flex">
+            @if ($runlogUrl)
+                <a href="{{ $runlogUrl }}" class="gh-pill" title="RunLog" target="_blank" rel="noopener">
+                    {!! $runlogIcon !!}
+                    {{ __('ui.nav.runlog') }}
+                </a>
+            @endif
+
             @if ($hasGames)
                 <a href="{{ route('games.entry') }}" class="gh-pill {{ $inGames ? 'is-active' : '' }}" title="{{ __('ui.nav.gamehub') }}">
                     @include('layouts.partials.gamehub-mark')
@@ -132,6 +141,10 @@
                     <a href="{{ $homeUrl }}{{ $anchor }}" @click="open = false"
                        class="border-b border-ink/10 py-3.5 font-display text-2xl font-bold tracking-tight">{{ __($key) }}</a>
                 @endforeach
+
+                @if ($runlogUrl)
+                    <a href="{{ $runlogUrl }}" target="_blank" rel="noopener" class="border-b border-ink/10 py-3.5 font-display text-2xl font-bold tracking-tight">{{ __('ui.nav.runlog') }}</a>
+                @endif
 
                 @if ($isAdmin && Route::has('admin.projects.index'))
                     <a href="{{ route('admin.projects.index') }}" class="border-b border-ink/10 py-3.5 font-display text-2xl font-bold tracking-tight">{{ __('ui.nav.admin_projects') }}</a>

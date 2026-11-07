@@ -8,6 +8,7 @@ return [
         'stack' => 'Teknoloji',
         'about' => 'Hakkımda',
         'gamehub' => 'GameHub',
+        'runlog' => 'RunLog',
         'contact' => 'İletişim',
         'admin_projects' => 'Admin Projeler',
 
@@ -53,6 +54,15 @@ return [
     ],
 
     'sections' => [
+        'runlog' => [
+            'title' => 'Son koşular',
+            'desc' => 'Kendi geliştirdiğim koşu günlüğü RunLog\'daki herkese açık sayfamdan canlı çekiliyor.',
+            'year' => ':year',
+            'runs' => 'koşu',
+            'avg' => 'ort. tempo',
+            'longest' => 'en uzun',
+            'open' => 'RunLog sayfamı aç',
+        ],
         'projects' => [
             'title' => 'Projeler',
             'desc' => 'Full-stack yetkinliğimi gösteren yayına alınmış projeler ve demo uygulamaları.',

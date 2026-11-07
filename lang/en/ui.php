@@ -9,6 +9,7 @@ return [
         'stack' => 'Stack',
         'about' => 'About',
         'gamehub' => 'GameHub',
+        'runlog' => 'RunLog',
         'contact' => 'Contact',
         'admin_projects' => 'Admin Projects',
 
@@ -56,6 +57,15 @@ return [
 
     // SECTIONS
     'sections' => [
+        'runlog' => [
+            'title' => 'Recent runs',
+            'desc' => 'Pulled live from my public RunLog page, the running log I built.',
+            'year' => 'in :year',
+            'runs' => 'runs',
+            'avg' => 'avg pace',
+            'longest' => 'longest',
+            'open' => 'Open my RunLog page',
+        ],
         'projects' => [
             'title' => 'Projects',
             'desc' => 'A mix of shipped work and demo apps that show full-stack capability.',
