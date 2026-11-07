@@ -83,4 +83,14 @@ class ProjectPageTest extends TestCase
         $this->get('/tr/projects/incubator-hub')->assertOk()
             ->assertSee('<h2>Sorun</h2>', false);
     }
+
+    public function test_race_timing_case_study_is_added_in_both_languages(): void
+    {
+        $this->get('/en/projects/race-timing')->assertOk()
+            ->assertSee('<h2>The problem</h2>', false)
+            ->assertSee('Working prototype');
+
+        $this->get('/tr/projects/race-timing')->assertOk()
+            ->assertSee('<h2>Sorun</h2>', false);
+    }
 }
