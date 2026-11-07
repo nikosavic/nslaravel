@@ -93,19 +93,17 @@
     </section>
 
     @if ($profile['games'] > 0)
-        <div>
-            <div class="spectrum" aria-hidden="true">
-                @foreach ($profile['statuses'] as $s)
-                    <i style="--st: {{ $s['color'] }}; --n: {{ $s['count'] }}" title="{{ $s['label'] }}: {{ $s['count'] }}"></i>
-                @endforeach
-            </div>
-
-            <ul class="legend">
-                @foreach ($profile['statuses'] as $s)
-                    <li style="--st: {{ $s['color'] }}"><i></i>{{ $s['label'] }} <b>{{ $s['count'] }}</b></li>
-                @endforeach
-            </ul>
+        <div class="spectrum" aria-hidden="true">
+            @foreach ($profile['statuses'] as $s)
+                <i style="--st: {{ $s['color'] }}; --n: {{ $s['count'] }}" title="{{ $s['label'] }}: {{ $s['count'] }}"></i>
+            @endforeach
         </div>
+
+        <ul class="legend">
+            @foreach ($profile['statuses'] as $s)
+                <li style="--st: {{ $s['color'] }}"><i></i>{{ $s['label'] }} <b>{{ $s['count'] }}</b></li>
+            @endforeach
+        </ul>
     @endif
 
     {{-- Highlights --}}
