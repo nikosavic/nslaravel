@@ -73,4 +73,14 @@ class ProjectPageTest extends TestCase
             ->assertSee('<h2>Sorun</h2>', false)
             ->assertSee('Geliştirme sürüyor');
     }
+
+    public function test_incubator_hub_case_study_is_added_in_both_languages(): void
+    {
+        $this->get('/en/projects/incubator-hub')->assertOk()
+            ->assertSee('<h2>The problem</h2>', false)
+            ->assertSee('Modbus TCP');
+
+        $this->get('/tr/projects/incubator-hub')->assertOk()
+            ->assertSee('<h2>Sorun</h2>', false);
+    }
 }
