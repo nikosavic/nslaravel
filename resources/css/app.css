@@ -347,7 +347,85 @@
 
     /* ---------- long-form text on project pages ---------- */
     .case-study {
-        @apply max-w-prose text-lg leading-relaxed text-ink/85;
+        @apply max-w-[40rem] text-[1.075rem] leading-[1.75] text-ink/85;
+    }
+
+    .case-study > * + * {
+        @apply mt-5;
+    }
+
+    .case-study h2 {
+        @apply mt-14 border-t-2 border-ink pt-4 font-display text-2xl font-bold sm:text-3xl;
+        letter-spacing: -0.03em;
+        line-height: 1.05;
+    }
+
+    .case-study h2:first-child {
+        @apply mt-0;
+    }
+
+    .case-study h3 {
+        @apply mt-8 font-display text-xl font-bold;
+        letter-spacing: -0.02em;
+    }
+
+    .case-study h2 + *,
+    .case-study h3 + * {
+        @apply mt-4;
+    }
+
+    .case-study strong {
+        @apply font-semibold text-ink;
+    }
+
+    .case-study a {
+        @apply font-semibold underline decoration-gold decoration-2 underline-offset-4 hover:decoration-ink;
+        word-break: break-word;
+    }
+
+    .case-study code {
+        @apply rounded bg-panel px-1.5 py-0.5 text-[0.9em] text-ink;
+    }
+
+    .case-study ul,
+    .case-study ol {
+        @apply space-y-2.5;
+    }
+
+    .case-study ul > li {
+        @apply relative pl-7;
+    }
+
+    .case-study ul > li::before {
+        content: "";
+        @apply absolute left-0 top-[0.7em] h-2.5 w-2.5 rounded-[3px] bg-gold;
+        transform: rotate(45deg);
+    }
+
+    .case-study ol {
+        counter-reset: step;
+    }
+
+    .case-study ol > li {
+        @apply relative pl-10;
+        counter-increment: step;
+    }
+
+    .case-study ol > li::before {
+        content: counter(step);
+        @apply absolute left-0 top-[0.2em] grid h-7 w-7 place-items-center rounded-full bg-ink font-display text-sm font-bold text-paper;
+    }
+
+    .fact {
+        @apply border-t-2 border-ink pt-2.5;
+    }
+
+    .fact dt {
+        @apply text-sm font-semibold text-ink/60;
+    }
+
+    .fact dd {
+        @apply mt-0.5 text-[15px] font-semibold leading-snug;
     }
 }
 
