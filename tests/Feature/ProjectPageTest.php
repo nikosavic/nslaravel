@@ -119,18 +119,35 @@ class ProjectPageTest extends TestCase
             ->assertSee('ısı haritası');
     }
 
+    private function makeProject(string $slug): Project
+    {
+        return Project::create([
+            'title' => 'Shots test',
+            'slug' => $slug,
+            'summary' => 'A training platform for tests.',
+            'body' => "Stack: Laravel\n\n## The problem\nSomething.",
+            'status' => 'published',
+            'sort_order' => 1,
+        ]);
+    }
+
     public function test_project_page_uses_the_site_logo_for_link_previews_without_screenshots(): void
     {
-        $this->get('/en/projects/runlog')->assertOk()
+        $this->makeProject('no-shots-test');
+
+        $this->get('/en/projects/no-shots-test')->assertOk()
             ->assertSee('<meta property="og:image" content="'.asset('images/ns-logo.png').'">', false)
             ->assertSee('<meta name="twitter:card" content="summary">', false)
-            ->assertSee('<meta property="og:description" content="A training platform', false);
+            ->assertSee('<meta property="og:description" content="A training platform for tests.">', false);
     }
 
     public function test_screenshots_in_the_project_folder_become_cover_gallery_and_share_image(): void
     {
-        $dir = public_path('images/projects/runlog');
+        // Uses its own slug and folder, so real screenshots in images/projects/runlog are never touched.
+        $slug = 'shots-test';
+        $dir = public_path('images/projects/'.$slug);
         $png = base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=');
+        $this->makeProject($slug);
 
         mkdir($dir, 0777, true);
 
@@ -139,18 +156,19 @@ class ProjectPageTest extends TestCase
                 file_put_contents($dir.'/'.$file, $png);
             }
 
-            $html = $this->get('/en/projects/runlog')->assertOk()->getContent();
+            $html = $this->get('/en/projects/'.$slug)->assertOk()->getContent();
 
-            $this->assertStringContainsString('<meta property="og:image" content="'.asset('images/projects/runlog/og.png').'">', $html);
+            $this->assertStringContainsString('<meta property="og:image" content="'.asset('images/projects/'.$slug.'/og.png').'">', $html);
             $this->assertStringContainsString('<meta name="twitter:card" content="summary_large_image">', $html);
-            $this->assertStringContainsString('src="'.asset('images/projects/runlog/cover.png').'"', $html);
-            $this->assertStringContainsString('images/projects/runlog/shot-1.png', $html);
-            $this->assertStringContainsString('images/projects/runlog/shot-2.png', $html);
-            // cover and share image are not repeated in the gallery
-            $this->assertSame(0, substr_count($html, 'alt="RunLog, screenshot 3"'));
+            $this->assertStringContainsString('src="'.asset('images/projects/'.$slug.'/cover.png').'"', $html);
+            $this->assertStringContainsString('images/projects/'.$slug.'/shot-1.png', $html);
+            $this->assertStringContainsString('images/projects/'.$slug.'/shot-2.png', $html);
+            // the cover and the share image are not repeated in the gallery
+            $this->assertStringContainsString('screenshot 2"', $html);
+            $this->assertStringNotContainsString('screenshot 3"', $html);
 
             $this->get('/en/projects')->assertOk()
-                ->assertSee('images/projects/runlog/cover.png', false);
+                ->assertSee('images/projects/'.$slug.'/cover.png', false);
         } finally {
             array_map('unlink', glob($dir.'/*') ?: []);
             rmdir($dir);
