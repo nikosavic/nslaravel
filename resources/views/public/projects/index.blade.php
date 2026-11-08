@@ -14,9 +14,9 @@
                 <div class="mt-12">
                     @foreach ($projects as $p)
                         <a href="{{ route('public.projects.show', ['locale' => $locale, 'project' => $p->slug]) }}"
-                           class="project-row {{ $p->image_path ? 'has-img' : '' }}">
-                            @if ($p->image_path)
-                                <img src="{{ asset('storage/'.$p->image_path) }}" alt="{{ $p->title }}" class="project-thumb" loading="lazy">
+                           class="project-row {{ $p->imageUrl() ? 'has-img' : '' }}">
+                            @if ($p->imageUrl())
+                                <img src="{{ $p->imageUrl() }}" alt="{{ $p->title }}" class="project-thumb" loading="lazy">
                             @endif
 
                             <div class="min-w-0">

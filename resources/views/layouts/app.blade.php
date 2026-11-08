@@ -6,12 +6,21 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ $title ? $title.' · ' : '' }}{{ config('app.name', 'Laravel') }}</title>
-        <meta name="description" content="{{ __('ui.hero.body') }}">
+        @php
+            $metaDescription = \Illuminate\Support\Str::limit(trim(strip_tags($description ?: __('ui.hero.body'))), 200);
+            $metaImage = $ogImage ?: asset('images/ns-logo.png');
+        @endphp
+        <meta name="description" content="{{ $metaDescription }}">
         <meta property="og:type" content="website">
         <meta property="og:site_name" content="{{ config('app.name', 'Laravel') }}">
         <meta property="og:title" content="{{ $title ?: config('app.name', 'Laravel') }}">
-        <meta property="og:description" content="{{ __('ui.hero.body') }}">
-        <meta property="og:image" content="{{ asset('images/ns-logo.png') }}">
+        <meta property="og:description" content="{{ $metaDescription }}">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:image" content="{{ $metaImage }}">
+        <meta name="twitter:card" content="{{ $ogImage ? 'summary_large_image' : 'summary' }}">
+        <meta name="twitter:title" content="{{ $title ?: config('app.name', 'Laravel') }}">
+        <meta name="twitter:description" content="{{ $metaDescription }}">
+        <meta name="twitter:image" content="{{ $metaImage }}">
         <link rel="canonical" href="{{ url()->current() }}">
 
         {{-- Set the theme before first paint so there is no light/dark flash. --}}
