@@ -8,7 +8,7 @@
     <div id="top"></div>
 
     {{-- ============================== HERO ============================== --}}
-    <section class="relative overflow-hidden">
+    <section class="hero-dots relative overflow-hidden">
         <div class="wrap grid gap-14 pb-20 pt-14 sm:pt-20 lg:grid-cols-12 lg:gap-10 lg:pb-28 lg:pt-24">
             <div class="lg:col-span-7">
                 <p class="status-line">
@@ -85,7 +85,7 @@
     </section>
 
     {{-- ============================= PROJECTS ============================= --}}
-    <section id="projects" class="section">
+    <section id="projects" class="section on-gold">
         <div class="wrap section-grid">
             <div class="section-head">
                 <div>
@@ -129,7 +129,7 @@
 
                 <div class="mt-8">
                     <a href="{{ route('public.projects.index', ['locale' => $locale]) }}"
-                       class="inline-flex items-center gap-2 font-semibold underline decoration-2 underline-offset-4 decoration-gold hover:decoration-ink">
+                       class="inline-flex items-center gap-2 font-semibold underline decoration-2 underline-offset-4 decoration-ink/40 hover:decoration-ink">
                         {{ __('ui.sections.projects.view_all') }}
                         <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
                     </a>
