@@ -84,4 +84,13 @@ class PublicSiteTest extends TestCase
         $this->get('/lang/tr')->assertRedirect();
         $this->assertSame('tr', session('locale'));
     }
+
+    public function test_home_hero_has_dots_and_projects_section_is_gold(): void
+    {
+        $this->project();
+
+        $this->get('/en')->assertOk()
+            ->assertSee('class="hero-dots relative overflow-hidden"', false)
+            ->assertSee('id="projects" class="section on-gold"', false);
+    }
 }

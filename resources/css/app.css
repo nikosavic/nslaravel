@@ -59,6 +59,46 @@
     }
 }
 
+/* ---------- hero: dotted tile pattern behind the content ----------
+   Small ink dots on a 24px grid, a gold dot every fifth one. The pattern is faint behind the headline
+   (left) and stronger on the right, and it fades out at the bottom edge. Content always paints above it. */
+.hero-dots {
+    isolation: isolate;
+}
+
+.hero-dots::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle at center, rgb(var(--gold)) 2.6px, transparent 3.1px),
+        radial-gradient(circle at center, rgb(var(--ink) / 0.2) 1.3px, transparent 1.8px);
+    background-size: 120px 120px, 24px 24px;
+    -webkit-mask-image: linear-gradient(to right, rgb(0 0 0 / 0.12), #000 68%), linear-gradient(to bottom, #000 72%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to right, rgb(0 0 0 / 0.12), #000 68%), linear-gradient(to bottom, #000 72%, transparent);
+    mask-composite: intersect;
+}
+
+/* ---------- gold section: dark ink on the yellow in both themes ---------- */
+.on-gold {
+    --ink: 11 37 38;
+    --panel: 255 244 214;
+    background: rgb(var(--gold));
+    color: rgb(var(--ink));
+}
+
+.on-gold .pill-gold {
+    background: rgb(var(--ink));
+    color: rgb(var(--gold));
+}
+
+.on-gold .project-row:hover {
+    background: linear-gradient(90deg, rgb(255 255 255 / 0.5), transparent 70%);
+}
+
 @layer components {
     .wrap {
         @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
