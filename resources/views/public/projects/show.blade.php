@@ -2,10 +2,11 @@
     $locale = request()->route('locale') ?? app()->getLocale();
     $case = \App\Support\CaseStudy::parse($project->body);
     $facts = $case['facts'];
+    $gallery = $project->gallery();
     $hasSide = $facts || $project->live_url || $project->repo_url;
 @endphp
 
-<x-app-layout :title="$project->title">
+<x-app-layout :title="$project->title" :description="$project->summary" :og-image="$project->shareImageUrl()">
     <article class="section !pb-10">
         <div class="wrap">
             <a href="{{ route('public.projects.index', ['locale' => $locale]) }}"
@@ -20,8 +21,8 @@
                 <p class="mt-6 max-w-2xl text-xl leading-relaxed text-ink/75 sm:text-2xl sm:leading-snug">{{ $project->summary }}</p>
             @endif
 
-            @if ($project->image_path)
-                <img src="{{ asset('storage/'.$project->image_path) }}" alt="{{ $project->title }}"
+            @if ($project->imageUrl())
+                <img src="{{ $project->imageUrl() }}" alt="{{ $project->title }}"
                      class="mt-12 w-full rounded-3xl border-2 border-ink object-cover" loading="lazy">
             @endif
 
@@ -62,6 +63,16 @@
                             <p class="text-ink/70">Case study coming soon.</p>
                         @endif
                     </div>
+
+                    @if ($gallery)
+                        <div class="project-gallery mt-14">
+                            @foreach ($gallery as $shot)
+                                <a href="{{ $shot }}" target="_blank" rel="noopener noreferrer">
+                                    <img src="{{ $shot }}" alt="{{ $project->title }}, screenshot {{ $loop->iteration }}" loading="lazy">
+                                </a>
+                            @endforeach
+                        </div>
+                    @endif
 
                     <div class="mt-16 flex max-w-[40rem] flex-wrap items-center gap-3 border-t-2 border-ink pt-8">
                         <a href="{{ route('public.projects.index', ['locale' => $locale]) }}" class="btn btn-line">{{ __('ui.sections.projects.view_all') }}</a>

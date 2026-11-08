@@ -73,10 +73,10 @@
             <div>
                 <label class="text-sm">Project image (jpg/png/webp)</label>
 
-                @if($project->image_path)
+                @if($project->imageUrl())
                     <div class="mt-2">
                         <img
-                            src="{{ asset('storage/' . $project->image_path) }}"
+                            src="{{ $project->imageUrl() }}"
                             alt="Project image"
                             class="h-32 rounded border object-cover"
                         >
