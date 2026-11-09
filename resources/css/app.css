@@ -82,6 +82,122 @@
     mask-composite: intersect;
 }
 
+/* ---------- section art ----------
+   Line drawings behind the Projects, Stack and Recent runs sections. Each SVG is used as a mask, so the colour comes
+   from the theme (ink lines, a gold or white accent) and one file works in light and dark mode. ::before draws the
+   lines, ::after the accent. Both sit behind the content (z-index -1) and fade out at the top and bottom edges so
+   the sections still meet cleanly. Nothing here is interactive or animated. */
+.art {
+    position: relative;
+    isolation: isolate;
+}
+
+.art::before,
+.art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: cover, 100% 100%;
+    mask-size: cover, 100% 100%;
+    -webkit-mask-position: var(--art-pos, center), center;
+    mask-position: var(--art-pos, center), center;
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+}
+
+.art::before {
+    background: rgb(var(--ink) / var(--art-line, 0.1));
+}
+
+.art::after {
+    background: var(--art-accent, rgb(var(--gold) / 0.5));
+}
+
+/* the same fade on every layer: clear in the middle, gone at the top and bottom edge */
+.art-wires::before,
+.art-wires::after,
+.art-layers::before,
+.art-layers::after,
+.art-topo::before,
+.art-topo::after {
+    --art-fade: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+}
+
+/* gold reads paler on the light paper, so the accent is stronger there */
+:root:not(.dark) .art-layers,
+:root:not(.dark) .art-topo {
+    --art-accent: rgb(var(--gold) / 0.85);
+}
+
+/* Projects (gold): wireframes of the screens in the list */
+.art-wires {
+    --art-line: 0.13;
+    --art-accent: rgb(255 255 255 / 0.4);
+}
+
+.art-wires::before {
+    -webkit-mask-image: url("/images/art/projects-wires.svg"), var(--art-fade);
+    mask-image: url("/images/art/projects-wires.svg"), var(--art-fade);
+}
+
+.art-wires::after {
+    -webkit-mask-image: url("/images/art/projects-fill.svg"), var(--art-fade);
+    mask-image: url("/images/art/projects-fill.svg"), var(--art-fade);
+}
+
+/* Stack: an isometric stack of layers in the empty corner under the title, the top plate in gold */
+.art-layers {
+    --art-line: 0.12;
+    --art-accent: rgb(var(--gold) / 0.55);
+    --art-pos: left center;
+}
+
+.art-layers::before {
+    -webkit-mask-image: url("/images/art/stack-layers.svg"), var(--art-fade);
+    mask-image: url("/images/art/stack-layers.svg"), var(--art-fade);
+}
+
+.art-layers::after {
+    -webkit-mask-image: url("/images/art/stack-top.svg"), var(--art-fade);
+    mask-image: url("/images/art/stack-top.svg"), var(--art-fade);
+}
+
+.art-layers::before,
+.art-layers::after {
+    --art-fade: linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent);
+}
+
+/* Recent runs: contour lines of a hill and a running route in gold */
+.art-topo {
+    --art-line: 0.1;
+    --art-accent: rgb(var(--gold) / 0.6);
+}
+
+.art-topo::before {
+    -webkit-mask-image: url("/images/art/runs-topo.svg"), var(--art-fade);
+    mask-image: url("/images/art/runs-topo.svg"), var(--art-fade);
+}
+
+.art-topo::after {
+    -webkit-mask-image: url("/images/art/runs-route.svg"), var(--art-fade);
+    mask-image: url("/images/art/runs-route.svg"), var(--art-fade);
+}
+
+/* One column (phones and tablets): the text takes the whole width, so only the faint contour lines stay */
+@media (max-width: 1023px) {
+    .art-wires::before,
+    .art-wires::after,
+    .art-layers::before,
+    .art-layers::after,
+    .art-topo::after {
+        display: none;
+    }
+}
+
 /* ---------- gold section: dark ink on the yellow in both themes ---------- */
 .on-gold {
     --ink: 11 37 38;
