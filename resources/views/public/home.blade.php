@@ -85,7 +85,7 @@
     </section>
 
     {{-- ============================= PROJECTS ============================= --}}
-    <section id="projects" class="section on-gold">
+    <section id="projects" class="section on-gold art-sheet">
         <div class="wrap section-grid">
             <div class="section-head">
                 <div>
