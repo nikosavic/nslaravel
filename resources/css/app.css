@@ -169,6 +169,44 @@
     mask-image: url("/images/art/runs-track.svg"), var(--art-fade);
 }
 
+/* Projects (gold): a drafting sheet. Fine graph paper with a crosshair every 160px, evenly spread and very light, so
+   it is a surface for the text to sit on rather than something drawn behind it, and a small title block in the
+   bottom-right corner, inside the section's bottom padding where no content ever is. Dark ink in both themes
+   because this section is always gold. */
+.art-sheet {
+    position: relative;
+    isolation: isolate;
+}
+
+.art-sheet::before,
+.art-sheet::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.art-sheet::before {
+    inset: 0;
+    background: url("/images/art/projects-grid.svg") center top / 160px 160px repeat;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
+}
+
+.art-sheet::after {
+    right: max(1.5rem, calc((100% - 72rem) / 2 + 2rem));
+    bottom: 1.25rem;
+    width: 300px;
+    height: 80px;
+    background: url("/images/art/projects-block.svg") no-repeat center / 100% 100%;
+}
+
+@media (max-width: 1023px) {
+    .art-sheet::after {
+        display: none;
+    }
+}
+
 /* One column (phones and tablets): the text takes the whole width, so only the faint contour lines of Recent runs stay */
 @media (max-width: 1023px) {
     .art-layers::before,

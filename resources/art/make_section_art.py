@@ -10,6 +10,8 @@ comes from the theme, which is why one file works in light and dark mode. Re-run
 
   stack-layers.svg / stack-top.svg         an isometric stack of plates, the top one drawn separately for the accent
   runs-topo.svg / runs-track.svg           contour lines of a hill and an athletics track with lanes
+  projects-grid.svg / projects-block.svg   drafting-sheet graph paper (a tile) and a small drawing title block
+                                           (these two have fixed dark ink: the Projects section is always gold)
 """
 import math
 import pathlib
@@ -144,5 +146,40 @@ def stack():
     svg(W, H, top, "stack-top.svg")
 
 
+# ---------------------------------------------------------------- projects: drafting sheet
+def sheet():
+    ink = "#0b2526"
+    # 160px tile: a line every 32px, a stronger one and a small crosshair every 160px, all in the tile's interior
+    minor = "".join(
+        f'<path d="M{v} 0 V160 M0 {v} H160"/>' for v in (16, 48, 112, 144)
+    )
+    major = '<path d="M80 0 V160 M0 80 H160" stroke-opacity=".1"/>'
+    cross = '<path d="M71 80 H89 M80 71 V89" stroke-opacity=".2" stroke-width="1.5"/>'
+    grid = (
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" fill="none" '
+        f'stroke="{ink}" stroke-width="1"><g stroke-opacity=".05">{minor}</g>{major}{cross}</svg>'
+    )
+    (OUT / "projects-grid.svg").write_text(grid, encoding="utf-8")
+    print(f"projects-grid.svg: {len(grid) / 1024:.1f} KB")
+
+    # title block, as in the corner of an engineering drawing
+    font = 'font-family="ui-monospace, Menlo, Consolas, monospace" font-size="10" letter-spacing="1" fill="%s" stroke="none" fill-opacity=".42"' % ink
+    block = (
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="300" height="80" viewBox="0 0 300 80" fill="none" '
+        f'stroke="{ink}" stroke-opacity=".28" stroke-width="1.5">'
+        '<rect x="1" y="1" width="298" height="78"/>'
+        '<path d="M1 28 H299 M1 54 H299 M196 28 V79"/>'
+        f'<text x="12" y="19" {font}>NIKOLA SAVIC / PROJECTS</text>'
+        f'<text x="12" y="45" {font}>FULL-STACK WORK</text>'
+        f'<text x="208" y="45" {font}>SHEET 02</text>'
+        f'<text x="12" y="71" {font}>LARAVEL  LIVEWIRE  TAILWIND</text>'
+        f'<text x="208" y="71" {font}>REV 2026</text>'
+        "</svg>"
+    )
+    (OUT / "projects-block.svg").write_text(block, encoding="utf-8")
+    print(f"projects-block.svg: {len(block) / 1024:.1f} KB")
+
+
 topo()
 stack()
+sheet()

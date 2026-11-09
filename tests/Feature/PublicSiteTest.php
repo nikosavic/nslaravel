@@ -91,7 +91,7 @@ class PublicSiteTest extends TestCase
 
         $this->get('/en')->assertOk()
             ->assertSee('class="hero-dots relative overflow-hidden"', false)
-            ->assertSee('id="projects" class="section on-gold"', false)
+            ->assertSee('id="projects" class="section on-gold art-sheet"', false)
             ->assertSee('id="stack" class="section bg-panel art art-layers"', false);
     }
 
@@ -101,7 +101,7 @@ class PublicSiteTest extends TestCase
 
         $files = array_unique($m[1]);
 
-        $this->assertCount(4, $files);
+        $this->assertCount(6, $files);
 
         foreach ($files as $file) {
             $this->assertFileExists(public_path($file));
