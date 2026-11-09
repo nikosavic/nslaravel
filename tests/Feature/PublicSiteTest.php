@@ -91,6 +91,21 @@ class PublicSiteTest extends TestCase
 
         $this->get('/en')->assertOk()
             ->assertSee('class="hero-dots relative overflow-hidden"', false)
-            ->assertSee('id="projects" class="section on-gold"', false);
+            ->assertSee('id="projects" class="section on-gold art art-wires"', false)
+            ->assertSee('id="stack" class="section bg-panel art art-layers"', false);
+    }
+
+    public function test_section_art_files_referenced_by_the_css_exist(): void
+    {
+        preg_match_all('~url\("/(images/art/[^"]+\.svg)"\)~', file_get_contents(resource_path('css/app.css')), $m);
+
+        $files = array_unique($m[1]);
+
+        $this->assertCount(6, $files);
+
+        foreach ($files as $file) {
+            $this->assertFileExists(public_path($file));
+            $this->assertStringContainsString('<svg', file_get_contents(public_path($file)));
+        }
     }
 }

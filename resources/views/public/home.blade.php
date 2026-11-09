@@ -85,7 +85,7 @@
     </section>
 
     {{-- ============================= PROJECTS ============================= --}}
-    <section id="projects" class="section on-gold">
+    <section id="projects" class="section on-gold art art-wires">
         <div class="wrap section-grid">
             <div class="section-head">
                 <div>
@@ -146,7 +146,7 @@
             $rlRuns = array_slice($rl['runs'], 0, 5);
             $rlUrl = \App\Services\RunLogFeed::profileUrl($locale);
         @endphp
-        <section id="runs" class="section">
+        <section id="runs" class="section art art-topo">
             <div class="wrap section-grid">
                 <div class="section-head">
                     <div>
@@ -191,7 +191,7 @@
     @endif
 
     {{-- ============================== STACK ============================== --}}
-    <section id="stack" class="section bg-panel">
+    <section id="stack" class="section bg-panel art art-layers">
         <div class="wrap section-grid">
             <div class="section-head">
                 <div>
